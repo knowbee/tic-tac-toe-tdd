@@ -3,20 +3,26 @@ class Game:
     def __init__(self):
         self.board = core.Board()
         self.game_state = core.GameState()
-        self.handleTurns = core.HandleTurns()
+        self.current_player_symbol = None
         self.playerOne = None
         self.playerTwo = None
 
-    def play(self, first_player):
+    def play(self):
         core.GameDisplay.show(self.board)
-        self.handleTurns.set_currentPlayerSymbol(first_player)
+        self.handle_turns()
         self.start()
         core.GameDisplay.show(self.board)
         core.GameDisplay.game_over()
 
+    def handle_turns(self):
+        if self.current_player_symbol == 'X':
+            self.current_player_symbol = "O"
+        else:
+            self.current_player_symbol = "X"
+
     def start(self):
        while not self.game_state.finished(self.board):
-           if(self.handleTurns.currentPlayerSymbol == self.playerOne.symbol):
+           if(self.current_player_symbol == self.playerOne.symbol):
              self.handle_play(self.playerOne)
            else:
              self.handle_play(self.playerTwo)
@@ -27,7 +33,7 @@ class Game:
         player.play(self.board, spot)
         core.GameDisplay.chosen_spot(player.symbol, spot)
         core.GameDisplay.show(self.board)
-        self.handleTurns.change()
+        self.handle_turns()
 
     def end_game(self):
         if (self.game_state.is_win(self.board)):

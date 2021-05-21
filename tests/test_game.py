@@ -10,14 +10,28 @@ class TestGame(unittest.TestCase):
     def test_game_has_a_board(self):
         self.assertIsInstance(self.game.board, core.Board)
 
-    def test_game_has_handle_turns(self):
-        self.assertIsInstance(self.game.handleTurns, core.HandleTurns)
-
     def test_game_has_no_player_one_at_game_start(self):
         self.assertIsNone(self.game.playerOne)
 
     def test_game_has_no_player_two_at_game_start(self):
         self.assertIsNone(self.game.playerTwo)
+        def test_has_current_player_symbol_property(self):
+          self.assertEqual(self.game.current_player_symbol, None, "It should return None when there is no current player")
+
+    def test_sets_current_player_symbol(self):
+        self.game.current_player_symbol = "O"
+        self.assertEqual(self.game.current_player_symbol, "O", "It should return O when current player is set to O")
+
+    def test_triggered_new_turn_is_X(self):
+        self.game.current_player_symbol = "O"
+        self.game.handle_turns()
+        self.assertEqual(self.game.current_player_symbol, "X", "It should return X when current player is handle_turnsd from O to X")
+
+    def test_triggered_new_turn_is_O(self):
+        self.game.current_player_symbol = "X"
+        self.game.handle_turns()
+        self.assertEqual(self.game.current_player_symbol, "O", "It should return O when current player is changed from X to O")
+
 
     def test_can_set_up_first_player_X(self):
         player_one: str = "X"

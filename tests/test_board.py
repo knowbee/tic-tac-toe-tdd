@@ -9,10 +9,15 @@ class TestBoard(unittest.TestCase):
     def test_game_board_has_9_grid(self):
         self.assertEqual( len(self.board.grid), 9 , "Game board should have 9 spots")
 
+    def test_game_board_is_empty(self):
+        is_empty = self.board.is_empty()
+        self.assertEqual(is_empty, True, "It should return true if the board is empty")
+
     def test_board_has_8_winning_combinations(self):
         self.assertEqual( len(self.board.win_combinations), 8, "The board should have 8 winning combinations")
 
     def test_board_has_first_winning_combination(self):
+        # a_combination: list = self.board.win_combinations[0]
         self.assertEqual( self.board.win_combinations[0], [0,1,2], "First win combination should be [0,1,2]")
 
     def test_board_second_win_combination(self):

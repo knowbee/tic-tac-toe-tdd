@@ -7,5 +7,8 @@ class Board:
         available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]
         return available_spots
 
+    def is_empty(self):
+        return len(self.get_available_spots()) == 9
+        
     def reset(self):
         self.grid = list(range(9))

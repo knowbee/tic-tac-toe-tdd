@@ -1,7 +1,6 @@
 from core.player import HumanPlayer
-import core
-
-class HumanVsHuman(core.Game):
+from core.game import Game
+class HumanVsHuman(Game):
     def __init__(self):
         super().__init__()
         self.playerOne = HumanPlayer()
