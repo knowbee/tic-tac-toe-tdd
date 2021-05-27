@@ -1,20 +1,20 @@
 import unittest
-import core
+from core import Game, Board
 from core.game_type import HumanVsHuman
 
 class TestGame(unittest.TestCase):
     def setUp(self):
-        self.game: core.Game = core.Game()
+        self.game: Game = Game()
         self.humanPlayer = HumanVsHuman()
 
     def test_game_has_a_board(self):
-        self.assertIsInstance(self.game.board, core.Board)
+        self.assertIsInstance(self.game.board, Board)
 
     def test_game_has_no_player_one_at_game_start(self):
-        self.assertIsNone(self.game.playerOne)
+        self.assertIsNone(self.game.player_one)
 
     def test_game_has_no_player_two_at_game_start(self):
-        self.assertIsNone(self.game.playerTwo)
+        self.assertIsNone(self.game.player_two)
         def test_has_current_player_symbol_property(self):
           self.assertEqual(self.game.current_player_symbol, None, "It should return None when there is no current player")
 
@@ -36,10 +36,10 @@ class TestGame(unittest.TestCase):
     def test_can_set_up_first_player_X(self):
         player_one: str = "X"
         player_two: str = "O"
-        self.humanPlayer.playerOne.symbol = player_one
-        self.humanPlayer.playerTwo.symbol = player_two
-        self.assertEqual(self.humanPlayer.playerOne.symbol, 'X', "It should set the second player symbol to X" )
-        self.assertEqual( self.humanPlayer.playerTwo.symbol, 'O', "It should set the second player symbol to O" )
+        self.humanPlayer.player_one.symbol = player_one
+        self.humanPlayer.player_two.symbol = player_two
+        self.assertEqual(self.humanPlayer.player_one.symbol, 'X', "It should set the second player symbol to X" )
+        self.assertEqual( self.humanPlayer.player_two.symbol, 'O', "It should set the second player symbol to O" )
 
     def test_is_win_returns_true_when_there_a_winner(self):
         self.game.board.grid = ["O", "1", "X",

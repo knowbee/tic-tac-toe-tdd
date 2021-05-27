@@ -1,2 +1,2 @@
 from .human_player import HumanPlayer
-# from .player import Player
+from .bot_player import BotPlayer

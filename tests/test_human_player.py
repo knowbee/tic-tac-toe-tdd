@@ -1,12 +1,12 @@
 import unittest
-import core
+from core import Board
 from core.player import HumanPlayer
 
 class TestHumanPlayer(unittest.TestCase):
 
     def setUp(self):
         self.humanPlayer = HumanPlayer()
-        self.board = core.Board()
+        self.board = Board()
 
     def test_humanPlayer_symbol_is_none_by_default(self):
         self.assertEqual( self.humanPlayer.symbol, None, "Symbol should be None when the game starts" )

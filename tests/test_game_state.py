@@ -1,11 +1,11 @@
 import unittest
-import core
+from core import GameState,  Board
 
 class TestGameState(unittest.TestCase):
 
     def setUp(self):
-        self.gameState = core.GameState();
-        self.board = core.Board();
+        self.gameState = GameState();
+        self.board = Board();
 
     def test_game_is_not_finished(self):
         is_finished: bool = self.gameState.finished(self.board)

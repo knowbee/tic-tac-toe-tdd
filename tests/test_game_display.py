@@ -53,7 +53,7 @@ class TestGameDisplay(unittest.TestCase):
 
     def test_before_the_game_starts_players_choose_type_of_game(self):
         GameDisplay.game_types()
-        self.assertEqual(GameDisplay.message, "1. Human Vs Human", "The game should display an option to choose a game type")
+        self.assertEqual(GameDisplay.message, "1. Human Vs Human\n2. Human Vs Computer", "The game should display an option to choose a game type")
 
     def test_game_shows_available_spots_a_player_can_choose_from(self):
         available_spots = ["4", "5"]

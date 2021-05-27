@@ -44,7 +44,7 @@ class GameDisplay:
 
     @classmethod
     def game_types(cls):
-        game_types = ["1. Human Vs Human"]
+        game_types = ["1. Human Vs Human", "2. Human Vs Computer"]
         cls.message = "\n".join(game_types)
         print(cls.message)
         return game_types
@@ -99,4 +99,6 @@ class GameDisplay:
     def handle_game_type_input(cls, game_type):
         if game_type == "1":
             return 0
+        if game_type == "2":
+            return 1
         return None
