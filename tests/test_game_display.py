@@ -1,6 +1,6 @@
 import unittest
 from cli import GameDisplay
-from core.board import Board
+from core import Board
 
 class TestGameDisplay(unittest.TestCase):
     def setUp(self):

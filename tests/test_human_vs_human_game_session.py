@@ -16,8 +16,7 @@ class MockGameDiplay(object):
 class TestHumanVsHumanGameSession(unittest.TestCase):
     def setUp(self):
         self.game_display = MockGameDiplay()
-        self.game_session: GameSession = GameSession(
-            HumanVsHuman(),HumanVsComputer(), self.game_display)
+        self.game_session: GameSession = GameSession(self.game_display)
         self.game: Game = Game()
         self.human_vs_human = HumanVsHuman()
 
