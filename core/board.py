@@ -21,20 +21,18 @@ class Board:
     def set_spot(self, spot: int, symbol: str) -> None:
         self.grid[spot] = symbol
 
+    def _add_new_combinations(self, new_combinations: List[list], all_combinations: List[list]) -> None:
+        for combination in new_combinations:
+            all_combinations.append(combination)
+
+    def get_both_diagonals(self):
+        return [self.top_left_to_bottom_right_diagonal(), self.bottom_left_to_top_right_diagonal()]
+
     def is_win(self):
         all_combinations: List[list] = []
-
-        all_rows: List[list] = self.get_all_rows()
-        for row in all_rows:
-            all_combinations.append(row)
-
-        all_columns: List[list] = self.get_all_columns()
-        for column in all_columns:
-            all_combinations.append(column)
-
-        all_diagonals: List[list] = [self.get_first_diagonal(), self.get_second_diagonal()]
-        for diagonal in all_diagonals:
-            all_combinations.append(diagonal)
+        self._add_new_combinations(self.get_all_rows(), all_combinations)
+        self._add_new_combinations(self.get_all_columns(), all_combinations)
+        self._add_new_combinations(self.get_both_diagonals(), all_combinations)
 
         for combination in all_combinations:
             if self.has_unique_elements(combination):
@@ -66,14 +64,14 @@ class Board:
 
         return all_rows
 
-    def get_first_diagonal(self) -> List[list]:
+    def top_left_to_bottom_right_diagonal(self) -> List[list]:
         first_diagonal: List[list] = []
         board: List[list] = self.generate_board()
         for i in range(self.size):
             first_diagonal.append(board[i][i])
         return self.get_elements_at_spots(first_diagonal)
 
-    def get_second_diagonal(self) -> List[list]:
+    def bottom_left_to_top_right_diagonal(self) -> List[list]:
         second_diagonal: List[list] = []
         board: List[list] = self.generate_board()
 

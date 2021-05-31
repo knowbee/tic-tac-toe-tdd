@@ -6,15 +6,14 @@ class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()
 
-    def test_game_board_has_9_grid(self):
-        self.assertEqual(len(self.board.grid), 9, "Game board should have 9 spots")
+    def test_Board_grid_is_equal_to_Board_size_squared(self):
+        self.assertEqual(
+            len(self.board.grid), self.board.size ** 2, f"Game board should have {self.board.size ** 2} spots"
+        )
 
-    def test_game_board_is_empty(self):
+    def test_Board_is_empty_returns_true(self):
         is_empty = self.board.is_empty()
         self.assertEqual(is_empty, True, "It should return true if the board is empty")
-
-    def test_board_has_8_winning_combinations(self):
-        self.assertEqual(len(self.board.win_combinations), 8, "The board should have 8 winning combinations")
 
     def test_Board_is_win_returns_True_for_first_row(self):
         self.board.set_spot(0, "X")
@@ -65,25 +64,25 @@ class TestBoard(unittest.TestCase):
 
         self.assertTrue(self.board.is_win(), "Third column should be a win")
 
-    def test_Board_is_win_returns_True_for_first_diagonal(self):
+    def test_Board_is_win_returns_True_for_bottom_left_to_top_right_diagonal(self):
         self.board.set_spot(0, "X")
         self.board.set_spot(4, "X")
         self.board.set_spot(8, "X")
 
-        self.assertTrue(self.board.is_win(), "First diagonal should be a win")
+        self.assertTrue(self.board.is_win(), "Bottom left to top right diagonal should be a win")
 
-    def test_Board_is_win_returns_True_for_second_diagonal(self):
+    def test_Board_is_win_returns_True_for_top_left_to_bottom_right_diagonal(self):
         self.board.set_spot(2, "X")
         self.board.set_spot(4, "X")
         self.board.set_spot(6, "X")
 
-        self.assertTrue(self.board.is_win(), "Second diagonal should be a win")
+        self.assertTrue(self.board.is_win(), "Top left to bottom right diagonal should be a win")
 
-    def test_board_available_spots(self):
+    def test_Board_available_spots_size_should_be_nine(self):
         available_spots = self.board.get_available_spots()
         self.assertEqual(len(available_spots), 9, "The game board should have 9 spots in total")
 
-    def test_board_can_be_reset(self):
+    def test_Board_reset(self):
         self.board.grid[4] = "X"
         self.board.reset()
         self.assertNotEqual(self.board.grid[4], "X", "The board game should have X at position 4")
