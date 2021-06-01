@@ -40,7 +40,7 @@ class Board:
                 return True
         return False
 
-    def almost_a_winning_spot(self) -> list[int]:
+    def almost_a_winning_spot(self) -> List[int]:
         all_combinations: List[list] = self.get_all_combinations()
         for combination in all_combinations:
             if self.has_almost_unique_elements(combination):
