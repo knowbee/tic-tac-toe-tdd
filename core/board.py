@@ -28,17 +28,30 @@ class Board:
     def get_both_diagonals(self):
         return [self.top_left_to_bottom_right_diagonal(), self.bottom_left_to_top_right_diagonal()]
 
-    def is_win(self):
+    def get_all_combinations(self) -> List[list]:
         all_combinations: List[list] = []
         self._add_new_combinations(self.get_all_rows(), all_combinations)
         self._add_new_combinations(self.get_all_columns(), all_combinations)
         self._add_new_combinations(self.get_both_diagonals(), all_combinations)
+        return all_combinations
 
+    def is_win(self) -> bool:
+        all_combinations: List[list] = self.get_all_combinations()
         for combination in all_combinations:
             if self.has_unique_elements(combination):
                 return True
-
         return False
+
+    def almost_a_winning_spot(self) -> int:
+        all_combinations: List[list] = self.get_all_combinations()
+        for combination in all_combinations:
+            if self.has_almost_unique_elements(combination):
+                return self.get_winning_spot(combination)
+        return None
+
+    def get_winning_spot(self, combination: List):
+        winning_spot = [int(s) for s in combination if s != "X" and s != "O"]
+        return winning_spot
 
     def get_all_rows(self) -> List[list]:
         all_rows: List[list] = self.generate_board()
@@ -84,6 +97,9 @@ class Board:
 
     def has_unique_elements(self, elements: List[int]) -> bool:
         return len(set(elements)) == 1
+
+    def has_almost_unique_elements(self, elements: List[int]) -> bool:
+        return len(set(elements)) == 2
 
     def get_elements_at_spots(self, spots: List[int]) -> List[Any]:
         return [self.grid[s] for s in spots]
