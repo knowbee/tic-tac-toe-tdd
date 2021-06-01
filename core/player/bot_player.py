@@ -10,7 +10,7 @@ class BotPlayer(Player):
 
     def play(self, board):
         winning_spot = board.almost_a_winning_spot()
-        if winning_spot is not None and len(winning_spot) != 0:
+        if winning_spot and len(winning_spot):
             board.grid[winning_spot[0]] = self.symbol
             return winning_spot[0]
         random_spot = int(self.get_random_available_spot(board))

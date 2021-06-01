@@ -1,6 +1,7 @@
 from core import GameState, Board, GameDisplay
 from core.player import HumanPlayer
 
+
 class Game:
     def __init__(self):
         self.board = Board()
@@ -14,7 +15,6 @@ class Game:
         self.start()
         GameDisplay.show(self.board)
         GameDisplay.game_over()
-
 
     def set_game_players(self, first_player: str):
         self.set_player_symbols(first_player)
@@ -32,23 +32,22 @@ class Game:
         self.current_player_symbol = first_player
 
     def handle_turns(self):
-        if self.current_player_symbol == 'X':
+        if self.current_player_symbol == "X":
             self.current_player_symbol = "O"
         else:
             self.current_player_symbol = "X"
 
     def start(self):
         while not self.game_state.finished(self.board):
-            if(self.current_player_symbol == self.player_one.symbol):
+            if self.current_player_symbol == self.player_one.symbol:
                 self.handle_play(self.player_one)
             else:
                 self.handle_play(self.player_two)
         self.end_game()
 
     def handle_play(self, player):
-        if(isinstance(player, HumanPlayer) ):
-            spot = GameDisplay.get_player_spot(
-                self.board.get_available_spots())
+        if isinstance(player, HumanPlayer):
+            spot = GameDisplay.get_player_spot(self.board.get_available_spots())
             player.play(self.board, spot)
             GameDisplay.chosen_spot(player.symbol, spot)
         else:
@@ -58,8 +57,8 @@ class Game:
         self.handle_turns()
 
     def end_game(self):
-        if (self.game_state.is_win(self.board)):
+        if self.board.is_win():
             winnerSymbol = self.game_state.get_winner(self.board)
             GameDisplay.winner(winnerSymbol)
-        elif (self.game_state.finished(self.board)):
+        elif self.game_state.finished(self.board):
             GameDisplay.tie()

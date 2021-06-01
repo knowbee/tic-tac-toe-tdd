@@ -5,18 +5,16 @@ class Board:
     def __init__(self):
         self.size = 3
         self.grid = list(range(self.size * self.size))
-        # Hard-coded... Not scalable if we move to 4x4, 5x5, etc.
-        self.win_combinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
     def get_available_spots(self):
         available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]
         return available_spots
 
     def is_empty(self):
-        return len(self.get_available_spots()) == 9
+        return len(self.get_available_spots()) == self.size ** 2
 
     def reset(self):
-        self.grid = list(range(9))
+        self.grid = list(range(self.size ** 2))
 
     def set_spot(self, spot: int, symbol: str) -> None:
         self.grid[spot] = symbol
@@ -42,12 +40,11 @@ class Board:
                 return True
         return False
 
-    def almost_a_winning_spot(self) -> int:
+    def almost_a_winning_spot(self) -> list[int]:
         all_combinations: List[list] = self.get_all_combinations()
         for combination in all_combinations:
             if self.has_almost_unique_elements(combination):
                 return self.get_winning_spot(combination)
-        return None
 
     def get_winning_spot(self, combination: List):
         winning_spot = [int(s) for s in combination if s != "X" and s != "O"]
@@ -55,13 +52,12 @@ class Board:
 
     def get_all_rows(self) -> List[list]:
         all_rows: List[list] = self.generate_board()
-
         return [self.get_elements_at_spots(row) for row in all_rows]
 
     def get_all_columns(self) -> List[list]:
         all_columns: List[list] = []
 
-        for i in range(self.size):  # i = 0
+        for i in range(self.size):
             column: List[int] = [i + j * self.size for j in range(self.size)]
             all_columns.append(self.get_elements_at_spots(column))
         return all_columns

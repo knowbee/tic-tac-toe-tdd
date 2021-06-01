@@ -1,12 +1,6 @@
 class GameState:
     def finished(self, board):
-        return self.is_win(board) or self.tie(board)
-
-    def is_win(self, board) -> bool:
-        for combination in board.win_combinations:
-            if self.is_winning_combination(combination, board.grid):
-                return True
-        return False
+        return board.is_win() or self.tie(board)
 
     def is_winning_combination(self, combination: list, grid: list) -> bool:
         first_choice = grid[combination[0]]
@@ -15,9 +9,9 @@ class GameState:
         return first_choice == second_choice == third_choice
 
     def get_winner(self, board) -> str:
-        for combination in board.win_combinations:
-            if self.is_winning_combination(combination, board.grid):
-                return board.grid[combination[0]]
+        for combination in board.get_all_combinations():
+            if board.has_unique_elements(combination):
+                return combination[0]
         return None
 
     def tie(self, board):

@@ -31,15 +31,6 @@ class TestGameState(unittest.TestCase):
         winner: str = self.gameState.get_winner(self.board)
         self.assertEqual(winner, "X", "It should return X as the winner")
 
-    def test_GameState_is_win_returns_false_Board_is_empty(self):
-        is_a_win: bool = self.gameState.is_win(self.board)
-        self.assertEqual(is_a_win, False, "It should return False on empty board")
-
-    def test_GameState_is_win_returns_true_when_there_is_a_winner(self):
-        self.board.grid = ["O", "1", "X", "O", "X", "5", "O", "7", "8"]
-        is_a_win: bool = self.gameState.is_win(self.board)
-        self.assertEqual(is_a_win, True, "It should return True when there is a winner")
-
 
 if __name__ == "__main__":
     unittest.main()

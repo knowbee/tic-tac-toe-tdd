@@ -39,17 +39,6 @@ class TestHumanVsComputer(unittest.TestCase):
     def test_HumanVsComputer_player_two_is_bot_player_instance(self):
         self.assertIsInstance(self.game.player_two, BotPlayer)
 
-    def test_Game_GameState_is_win_returns_true_when_there_a_winner(self):
-        self.game.board.grid = ["O", "1", "X", "O", "X", "5", "O", "7", "8"]
-        is_a_win: bool = self.game.game_state.is_win(self.game.board)
-        self.assertEqual(is_a_win, True, "It should return True when there is a winner")
-
-    def test_Game_GameState_end_game_when_symbol_O_wins(self):
-        self.game.board.grid = ["O", "X", "X", "O", "X", "O", "O", "O", "X"]
-        self.game.end_game()
-        is_a_win: bool = self.game.game_state.is_win(self.game.board)
-        self.assertEqual(is_a_win, True, "It should announce the player with symbol O as the player")
-
     def test_Game_GameState_tie_returns_true_when_game_is_over_without_a_winner(self):
         self.game.board.grid = ["X", "O", "X", "O", "X", "O", "O", "X", "O"]
         is_a_tie: bool = self.game.game_state.tie(self.game.board)
