@@ -82,24 +82,36 @@ class TestBoard(unittest.TestCase):
         available_spots = self.board.get_available_spots()
         self.assertEqual(len(available_spots), 9, "The game board should have 9 spots in total")
 
-    def test_Board_almost_a_winning_spot_should_return_winning_spot_in_diagonal(self):
-        self.board.grid = ["X", "1", "2", "3", "X", "5", "6", "O", "8"]
-        winning_spot = self.board.almost_a_winning_spot()
-        self.assertEqual(winning_spot[0], 8)
+    def test_Board_get_expected_winning_spot_should_return_winning_spot_in_diagonal(self):
+        self.board.grid = [
+            "X", "1", "2", 
+            "3", "X", "5", 
+            "6", "O", "8"]
+        winning_spot = self.board.get_expected_winning_spot()
+        self.assertEqual(winning_spot, 8)
 
-    def test_Board_almost_a_winning_spot_should_return_winning_spot_in_row(self):
-        self.board.grid = ["X", "X", "2", "3", "4", "5", "6", "O", "8"]
-        winning_spot = self.board.almost_a_winning_spot()
-        self.assertEqual(winning_spot[0], 2)
+    def test_Board_get_expected_winning_spot_should_return_winning_spot_in_row(self):
+        self.board.grid = [
+            "X", "X", "2", 
+            "3", "4", "5", 
+            "6", "O", "8"]
+        winning_spot = self.board.get_expected_winning_spot()
+        self.assertEqual(winning_spot, 2)
 
-    def test_Board_almost_a_winning_spot_should_return_winning_spot_in_column(self):
-        self.board.grid = ["X", "1", "2", "3", "4", "5", "X", "O", "8"]
-        winning_spot = self.board.almost_a_winning_spot()
-        self.assertEqual(winning_spot[0], 3)
+    def test_Board_get_expected_winning_spot_should_return_winning_spot_in_column(self):
+        self.board.grid = [
+            "X", "1", "2", 
+            "3", "4", "5", 
+            "X", "O", "8"]
+        winning_spot = self.board.get_expected_winning_spot()
+        self.assertEqual(winning_spot, 3)
 
-    def test_Board_almost_a_winning_spot_should_return_None(self):
-        self.board.grid = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-        winning_spots = self.board.almost_a_winning_spot()
+    def test_Board_get_expected_winning_spot_should_return_None(self):
+        self.board.grid = [
+            "0", "1", "2", 
+            "3", "4", "5", 
+            "6", "7", "8"]
+        winning_spots = self.board.get_expected_winning_spot()
         self.assertIsNone(winning_spots)
 
     def test_Board_reset(self):
