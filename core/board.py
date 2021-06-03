@@ -40,14 +40,15 @@ class Board:
                 return True
         return False
 
-    def almost_a_winning_spot(self) -> List[int]:
+    def get_expected_winning_spot(self) -> List[int]:
         all_combinations: List[list] = self.get_all_combinations()
         for combination in all_combinations:
             if self.has_almost_unique_elements(combination):
                 return self.get_winning_spot(combination)
+                
 
     def get_winning_spot(self, combination: List):
-        winning_spot = [int(s) for s in combination if s != "X" and s != "O"]
+        winning_spot = [int(s) for s in combination if s != "X" and s != "O"][0]
         return winning_spot
 
     def get_all_rows(self) -> List[list]:

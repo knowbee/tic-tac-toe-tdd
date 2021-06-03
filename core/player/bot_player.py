@@ -8,11 +8,11 @@ class BotPlayer(Player):
     def __init__(self):
         super().__init__()
 
-    def play(self, board):
-        winning_spot = board.almost_a_winning_spot()
-        if winning_spot and len(winning_spot):
-            board.grid[winning_spot[0]] = self.symbol
-            return winning_spot[0]
+    def play(self, board: Board) -> int:
+        winning_spot: int = board.get_expected_winning_spot()
+        if winning_spot is not None:
+            board.grid[winning_spot] = self.symbol
+            return winning_spot
         random_spot = int(self.get_random_available_spot(board))
         board.grid[random_spot] = self.symbol
         return random_spot
