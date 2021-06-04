@@ -1,10 +1,11 @@
 from typing import List, Any
+from cli.game_display import GameDisplay
 
 
 class Board:
     def __init__(self, size):
         self.size = size
-        self.grid = list(range(size * size))
+        self.grid = list(range(self.size * self.size))
 
     def get_available_spots(self):
         available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]

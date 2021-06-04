@@ -15,4 +15,4 @@ class GameState:
         return None
 
     def tie(self, board):
-        return len([s for s in board.grid if s == "X" or s == "O"]) == 9
+        return len([s for s in board.grid if s == "X" or s == "O"]) == board.size * board.size

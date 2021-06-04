@@ -5,6 +5,6 @@ from cli.game_display import GameDisplay
 
 class HumanVsHuman(Game):
     def __init__(self):
-        super().__init__(size=GameDisplay.get_board_size())
+        super().__init__()
         self.player_one = HumanPlayer()
         self.player_two = HumanPlayer()

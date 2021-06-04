@@ -1,5 +1,5 @@
 from core.game_type import HumanVsHuman, HumanVsComputer
-from core import Game, GameDisplay, Board
+from core import Game, GameDisplay
 
 
 class GameSession:

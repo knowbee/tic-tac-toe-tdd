@@ -1,4 +1,3 @@
-from core import Board
 from typing import List, Any
 
 
@@ -9,7 +8,6 @@ class GameDisplay:
     @classmethod
     def show(cls, board):
         formated_grid = cls.get_grid_with_nested_rows(board)
-        print(formated_grid)
         for y in list(range(board.size)):
             row = ""
             for x in list(range(board.size)):
@@ -93,7 +91,7 @@ class GameDisplay:
 
     @classmethod
     def get_board_size(cls):
-        cls.message = "What board size you want to play?"
+        cls.message = "What board size do you want to play?"
         print(cls.message)
         size = input()
         return cls.format_input(size)

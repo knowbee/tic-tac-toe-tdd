@@ -3,8 +3,9 @@ from core.player import HumanPlayer
 
 
 class Game:
-    def __init__(self, size):
-        self.board = Board(size=size)
+    def __init__(self, game_display=None):
+        self.game_display = GameDisplay
+        self.board = Board(size=self.game_display.get_board_size())
         self.game_state = GameState()
         self.current_player_symbol = None
         self.player_one = None
