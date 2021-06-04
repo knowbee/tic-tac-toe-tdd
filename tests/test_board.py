@@ -137,11 +137,11 @@ class TestBoard(unittest.TestCase):
         self.board.reset()
         self.assertNotEqual(self.board.grid[4], "X", "The board game should have X at position 4")
 
-    def test_Board_size_is_three(self):
+    def test_Board_size_is_of_size_three(self):
         self.board.size = 3
         self.assertEqual(self.board.size, 3)
 
-    def test_Board_size_is_five(self):
+    def test_Board_size_is_of_size_five(self):
         self.board.size = 5
         self.assertEqual(self.board.size, 5)
 

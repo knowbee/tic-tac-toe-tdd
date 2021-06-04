@@ -3,7 +3,7 @@ from core import Board
 from core.player import HumanPlayer
 
 
-class MockGameDiplay:
+class MockGameDisplay:
     def get_game_type(self) -> int:
         return 1
 
@@ -16,7 +16,7 @@ class MockGameDiplay:
 
 class MockGame:
     def __init__(self, game_display=None):
-        self.game_display = MockGameDiplay
+        self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
         self.player_one = None
         self.player_two = None
@@ -48,7 +48,7 @@ class MockGame:
 class TestHumanPlayer(unittest.TestCase):
     def setUp(self):
         self.humanPlayer = HumanPlayer()
-        self.game = MockGame(game_display=MockGameDiplay)
+        self.game = MockGame(game_display=MockGameDisplay)
         self.board = self.game.board
 
     def test_HumanPlayer_symbol_is_none_by_default(self):

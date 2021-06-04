@@ -6,7 +6,7 @@ from cli import GameDisplay
 from core.player import HumanPlayer
 
 
-class MockGameDiplay:
+class MockGameDisplay:
     def get_game_type(self) -> int:
         return 0
 
@@ -19,7 +19,7 @@ class MockGameDiplay:
 
 class MockGame:
     def __init__(self, game_display=None):
-        self.game_display = MockGameDiplay
+        self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
         self.player_one = None
         self.player_two = None
@@ -57,7 +57,7 @@ class HumanVsHuman(MockGame):
 
 class TestHumanVsHumanGameSession(unittest.TestCase):
     def setUp(self):
-        self.game_display = MockGameDiplay()
+        self.game_display = MockGameDisplay()
         self.game_session: GameSession = GameSession(self.game_display)
         self.human_vs_human = HumanVsHuman()
 

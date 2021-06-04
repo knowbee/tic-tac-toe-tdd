@@ -3,9 +3,27 @@ from cli import GameDisplay
 from core import Board
 
 
+class MockGameDisplay:
+    def __init__(self):
+        self.message = None
+
+    def get_board_size(self):
+        self.message = "What board size you want to play?"
+        return 3
+
+
+class MockGame:
+    def __init__(self, game_display=None):
+        self.game_display = MockGameDisplay
+        self.board = Board(size=self.game_display.get_board_size(self))
+        self.player_one = None
+        self.player_two = None
+
+
 class TestGameDisplay(unittest.TestCase):
     def setUp(self):
-        self.board = Board(size=5)
+        self.game = MockGame(MockGameDisplay)
+        self.board = self.game.board
 
     def test_game_is_over_message(self):
         GameDisplay.game_over()
@@ -61,6 +79,11 @@ class TestGameDisplay(unittest.TestCase):
             "Who plays first, X or O?",
             "The game should give user a chance to pick who should go first",
         )
+
+    def test_GameDisplay_get_board_size_asks_board_size(self):
+        size = MockGameDisplay.get_board_size(MockGameDisplay)
+        self.assertEqual(MockGameDisplay.message, "What board size you want to play?")
+        self.assertEqual(self.board.size, size)
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from core import Board
 from core.player import HumanPlayer, BotPlayer
 
 
-class MockGameDiplay:
+class MockGameDisplay:
     def get_game_type(self) -> int:
         return 1
 
@@ -21,7 +21,7 @@ class MockGameState:
 
 class MockGame:
     def __init__(self, game_display=None):
-        self.game_display = MockGameDiplay
+        self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
         self.player_one = None
         self.player_two = None
