@@ -1,11 +1,74 @@
 import unittest
-from core import Game, Board
-from core.game_type import HumanVsHuman
+from core import Board
+from core.player import HumanPlayer
+
+
+class MockGameDisplay:
+    def get_game_type(self) -> int:
+        return 0
+
+    def get_first_player(self) -> str:
+        return "X"
+
+    def get_board_size(self) -> int:
+        return 3
+
+
+class MockGameState:
+    def tie(self, board):
+        return len([s for s in board.grid if s == "X" or s == "O"]) == board.size * board.size
+
+
+class MockGame:
+    def __init__(self, game_display=None):
+        self.game_display = MockGameDisplay
+        self.board = Board(size=self.game_display.get_board_size(self))
+        self.player_one = None
+        self.player_two = None
+        self.current_player_symbol = None
+        self.game_state = MockGameState
+
+    def handle_turns(self):
+        if self.current_player_symbol == "X":
+            self.current_player_symbol = "O"
+        else:
+            self.current_player_symbol = "X"
+
+    def set_player_symbols(self, first_player: str) -> None:
+        if first_player == "X":
+            self.player_two.symbol = "O"
+            self.player_one.symbol = "X"
+        else:
+            self.player_two.symbol = "X"
+            self.player_one.symbol = "O"
+
+    def set_game_players(self, first_player: str):
+        self.set_player_symbols(first_player)
+        self._initiate_current_player_symbol(first_player)
+
+    def set_player_symbols(self, first_player: str) -> None:
+        if first_player == "X":
+            self.player_two.symbol = "O"
+            self.player_one.symbol = "X"
+        else:
+            self.player_two.symbol = "X"
+            self.player_one.symbol = "O"
+
+    def _initiate_current_player_symbol(self, first_player: str) -> None:
+        self.current_player_symbol = first_player
+
+
+class HumanVsHuman(MockGame):
+    def __init__(self):
+        super().__init__()
+        self.player_one = HumanPlayer()
+        self.player_two = HumanPlayer()
 
 
 class TestGame(unittest.TestCase):
     def setUp(self):
-        self.game: Game = Game()
+        self.game_display = MockGameDisplay()
+        self.game: Game = MockGame()
         self.humanPlayer = HumanVsHuman()
 
     def test_Game_has_a_board(self):
@@ -42,5 +105,5 @@ class TestGame(unittest.TestCase):
 
     def test_Game_GameState_tie_returns_true_when_game_is_over_without_a_winner(self):
         self.game.board.grid = ["X", "O", "X", "O", "X", "O", "O", "X", "O"]
-        is_a_tie: bool = self.game.game_state.tie(self.game.board)
+        is_a_tie: bool = self.game.game_state.tie(MockGameState, self.game.board)
         self.assertEqual(is_a_tie, True, "It should return True when there is a tie")

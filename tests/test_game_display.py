@@ -5,29 +5,7 @@ from core import Board
 
 class TestGameDisplay(unittest.TestCase):
     def setUp(self):
-        self.board = Board()
-
-    def test_game_board_is_displayed(self):
-
-        board = " 0 | 1 | 2 \n===+===+===\n 3 | 4 | 5 \n===+===+===\n 6 | 7 | 8 \n\n"
-
-        self.board.size = 3
-        self.board.set_board_grid()
-        self.assertEqual(
-            board,
-            " %s | %s | %s \n===+===+===\n %s | %s | %s \n===+===+===\n %s | %s | %s \n\n"
-            % (
-                self.board.grid[0],
-                self.board.grid[1],
-                self.board.grid[2],
-                self.board.grid[3],
-                self.board.grid[4],
-                self.board.grid[5],
-                self.board.grid[6],
-                self.board.grid[7],
-                self.board.grid[8],
-            ),
-        )
+        self.board = Board(size=5)
 
     def test_game_is_over_message(self):
         GameDisplay.game_over()
