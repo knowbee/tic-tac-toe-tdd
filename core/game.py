@@ -3,8 +3,8 @@ from core.player import HumanPlayer
 
 
 class Game:
-    def __init__(self):
-        self.board = Board()
+    def __init__(self, size):
+        self.board = Board(size=size)
         self.game_state = GameState()
         self.current_player_symbol = None
         self.player_one = None
@@ -38,6 +38,7 @@ class Game:
             self.current_player_symbol = "X"
 
     def start(self):
+
         while not self.game_state.finished(self.board):
             if self.current_player_symbol == self.player_one.symbol:
                 self.handle_play(self.player_one)

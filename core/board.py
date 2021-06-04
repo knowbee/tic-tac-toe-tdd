@@ -2,16 +2,17 @@ from typing import List, Any
 
 
 class Board:
-    def __init__(self):
-        self.size = 3
-        self.grid = list(range(self.size * self.size))
+    def __init__(self, size):
+        self.size = size
+        self.grid = list(range(size * size))
 
     def get_available_spots(self):
         available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]
         return available_spots
 
     def is_empty(self):
-        return len(self.get_available_spots()) == self.size ** 2
+        if self.size is not None:
+            return len(self.get_available_spots()) == self.size ** 2
 
     def reset(self):
         self.grid = list(range(self.size ** 2))
@@ -45,7 +46,6 @@ class Board:
         for combination in all_combinations:
             if self.has_almost_unique_elements(combination):
                 return self.get_winning_spot(combination)
-                
 
     def get_winning_spot(self, combination: List):
         winning_spot = [int(s) for s in combination if s != "X" and s != "O"][0]
@@ -64,14 +64,15 @@ class Board:
         return all_columns
 
     def generate_board(self) -> List[list]:
-        # TODO Improve algorithm. Do not hardcode first row.
-        first_row: List[int] = list(range(self.size))
+        size = self.size
+        if size is None:
+            size = 3
+
+        first_row: List[int] = list(range(size))
         all_rows: List[list] = [first_row]
-
-        for i in range(self.size - 1):
-            row: List[int] = [e + self.size for e in all_rows[-1]]
+        for i in range(size - 1):
+            row: List[int] = [e + size for e in all_rows[-1]]
             all_rows.append(row)
-
         return all_rows
 
     def top_left_to_bottom_right_diagonal(self) -> List[list]:

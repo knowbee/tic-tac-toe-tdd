@@ -8,7 +8,11 @@ class TestGameDisplay(unittest.TestCase):
         self.board = Board()
 
     def test_game_board_is_displayed(self):
+
         board = " 0 | 1 | 2 \n===+===+===\n 3 | 4 | 5 \n===+===+===\n 6 | 7 | 8 \n\n"
+
+        self.board.size = 3
+        self.board.set_board_grid()
         self.assertEqual(
             board,
             " %s | %s | %s \n===+===+===\n %s | %s | %s \n===+===+===\n %s | %s | %s \n\n"

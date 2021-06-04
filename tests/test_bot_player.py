@@ -36,14 +36,10 @@ class TestBot(unittest.TestCase):
         self.assertTrue(chosen_spot_by_computer)
 
     def test_BotPlayer_play_makes_a_play_at_the_expected_winning_spot_HumanPlayer_would_choose(self):
-        self.board.grid = [
-            "X", "1", "2", 
-            "3", "4", "5",
-            "X", "O", "8"]
-        next_board_state = [
-            "X", "1", "2", 
-            "X", "4", "5", 
-            "X", "O", "8"]
+        self.board.size = 3
+        self.board.set_board_grid()
+        self.board.grid = ["X", "1", "2", "3", "4", "5", "X", "O", "8"]
+        next_board_state = ["X", "1", "2", "X", "4", "5", "X", "O", "8"]
         winning_spot = self.board.get_expected_winning_spot()
 
         self.assertEqual(winning_spot, 3)

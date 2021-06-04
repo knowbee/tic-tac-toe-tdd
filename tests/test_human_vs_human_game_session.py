@@ -1,6 +1,6 @@
 import unittest
 from game_session import GameSession
-from core import Game
+from core import Game, Board
 from core.game_type import HumanVsHuman, HumanVsComputer
 from cli import GameDisplay
 
@@ -11,6 +11,9 @@ class MockGameDiplay(object):
 
     def get_first_player(self) -> str:
         return "X"
+
+    def get_board_size(self) -> int:
+        return 3
 
 
 class TestHumanVsHumanGameSession(unittest.TestCase):
@@ -51,6 +54,6 @@ class TestHumanVsHumanGameSession(unittest.TestCase):
 
     def test_GameSession_get_match_should_return_game_with_players_set(self):
         game: HumanVsHuman = self.game_session.get_match()
-
+        self.assertEqual(Board.size, 3)
         self.assertEqual("X", game.player_one.symbol, "Incorrect first player")
         self.assertEqual("O", game.player_two.symbol, "Incorrect second player")

@@ -1,5 +1,6 @@
 from core.game_type import HumanVsHuman, HumanVsComputer
-from core import Game, GameDisplay
+from core import Game, GameDisplay, Board
+
 
 class GameSession:
     def __init__(self, game_display: GameDisplay):
@@ -18,6 +19,7 @@ class GameSession:
         first_player: str = self.game_display.get_first_player()
         game.set_game_players(first_player)
         return game
+
 
 if __name__ == "__main__":
     game_session = GameSession(GameDisplay)
