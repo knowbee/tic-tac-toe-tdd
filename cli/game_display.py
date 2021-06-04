@@ -6,7 +6,7 @@ class GameDisplay:
         self.message = None
 
     @classmethod
-    def show(cls, board):
+    def show(cls, board) -> None:
         formated_grid = cls.get_grid_with_nested_rows(board)
         for y in list(range(board.size)):
             row = ""
@@ -18,13 +18,13 @@ class GameDisplay:
 
     @staticmethod
     def get_grid_with_nested_rows(board):
-        grid: List[list] = []
-        count = 0
+        nested_rows: List[list] = []
+        count: int = 0
         for i in range(board.size):
             row: List[Any] = board.grid[count : count + board.size]
             count += board.size
-            grid.append(row)
-        return grid
+            nested_rows.append(row)
+        return nested_rows
 
     @classmethod
     def game_over(cls):

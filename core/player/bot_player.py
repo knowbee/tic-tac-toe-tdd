@@ -18,5 +18,6 @@ class BotPlayer(Player):
         return random_spot
 
     def get_random_available_spot(self, board: Board) -> int:
+        print("here in get random")
         available_spot = board.get_available_spots()
         return random.choice(available_spot)

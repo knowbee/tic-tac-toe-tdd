@@ -3,15 +3,15 @@ from core.player import HumanPlayer
 
 
 class Game:
-    def __init__(self, game_display=None):
-        self.game_display = GameDisplay
+    def __init__(self, player_one, player_two, game_display=None):
+        self.game_display = game_display
         self.board = Board(size=self.game_display.get_board_size())
         self.game_state = GameState()
         self.current_player_symbol = None
-        self.player_one = None
-        self.player_two = None
+        self.player_one = player_one
+        self.player_two = player_two
 
-    def play(self):
+    def play_game(self):
         GameDisplay.show(self.board)
         self.start()
         GameDisplay.show(self.board)
@@ -42,19 +42,18 @@ class Game:
 
         while not self.game_state.finished(self.board):
             if self.current_player_symbol == self.player_one.symbol:
+                print("here in if")
                 self.handle_play(self.player_one)
             else:
+                print("here in else")
                 self.handle_play(self.player_two)
         self.end_game()
 
-    def handle_play(self, player):
-        if isinstance(player, HumanPlayer):
-            spot = GameDisplay.get_player_spot(self.board.get_available_spots())
-            player.play(self.board, spot)
-            GameDisplay.chosen_spot(player.symbol, spot)
-        else:
-            spot = player.play(self.board)
-            GameDisplay.chosen_spot(player.symbol, spot)
+    def handle_play(self, player, **kwargs):
+        print(player)
+        spot = GameDisplay.get_player_spot(self.board.get_available_spots())
+        player.play(board=self.board, spot=spot)
+        GameDisplay.chosen_spot(player.symbol, spot)
         GameDisplay.show(self.board)
         self.handle_turns()
 

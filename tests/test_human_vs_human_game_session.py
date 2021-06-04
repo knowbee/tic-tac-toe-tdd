@@ -1,7 +1,7 @@
 import unittest
 from game_session import GameSession
 from core import Game, Board
-from core.game_type import HumanVsComputer
+from core.game_type import HumanVsComputer, HumanVsHuman
 from cli import GameDisplay
 from core.player import HumanPlayer
 
@@ -48,46 +48,48 @@ class MockGame:
         self.current_player_symbol = first_player
 
 
-class HumanVsHuman(MockGame):
-    def __init__(self):
-        super().__init__()
-        self.player_one = HumanPlayer()
-        self.player_two = HumanPlayer()
+# class HumanVsHuman(MockGame):
+#     def __init__(self):
+#         super().__init__()
+#         self.player_one = HumanPlayer()
+#         self.player_two = HumanPlayer()
 
 
 class TestHumanVsHumanGameSession(unittest.TestCase):
     def setUp(self):
         self.game_display = MockGameDisplay()
+        self.game = Game(game_display=self.game_display)
         self.game_session: GameSession = GameSession(self.game_display)
-        self.human_vs_human = HumanVsHuman()
+
+        self.human_vs_human = HumanVsHuman(game=self.game)
 
     def test_when_HumanVsHuman_set_player_symbols_to_O_player_one_symbol_should_be_O(self):
-        self.human_vs_human.set_player_symbols("O")
+        self.human_vs_human.game.set_player_symbols("O")
         self.assertEqual(
-            self.human_vs_human.player_one.symbol, "O", "If the first player is O, player one symbol should be O"
+            self.human_vs_human.game.player_one.symbol, "O", "If the first player is O, player one symbol should be O"
         )
         self.assertEqual(
-            self.human_vs_human.player_two.symbol, "X", "If the first player is X, player one symbol should be X"
+            self.human_vs_human.game.player_two.symbol, "X", "If the first player is X, player one symbol should be X"
         )
 
     def test_when_HumanVsHuman_set_player_symbols_to_X_player_one_symbol_should_be_X(self):
-        self.human_vs_human.set_player_symbols("X")
+        self.human_vs_human.game.set_player_symbols("X")
         self.assertEqual(
-            self.human_vs_human.player_one.symbol, "X", "If the first player is X, player one symbol should be X"
+            self.human_vs_human.game.player_one.symbol, "X", "If the first player is X, player one symbol should be X"
         )
         self.assertEqual(
-            self.human_vs_human.player_two.symbol, "O", "If the first player is O, player one symbol should be O"
+            self.human_vs_human.game.player_two.symbol, "O", "If the first player is O, player one symbol should be O"
         )
 
     def test_HumanVsHuman_set_game_players_to_X_player_one_symbol_should_be_X(self):
-        self.human_vs_human.set_game_players("X")
+        self.human_vs_human.game.set_game_players("X")
 
-        self.assertEqual("X", self.human_vs_human.player_one.symbol, "Incorrect symbol for first player.")
-        self.assertEqual("O", self.human_vs_human.player_two.symbol, "Incorrect symbol for second player.")
+        self.assertEqual("X", self.human_vs_human.game.player_one.symbol, "Incorrect symbol for first player.")
+        self.assertEqual("O", self.human_vs_human.game.player_two.symbol, "Incorrect symbol for second player.")
 
     def test_HumanVsHuman_set_game_players_to_X_current_player_symbol_should_be_X(self):
-        self.human_vs_human.set_game_players("X")
-        self.assertEqual("X", self.human_vs_human.current_player_symbol, "Incorrect current player symbol.")
+        self.human_vs_human.game.set_game_players("X")
+        self.assertEqual("X", self.human_vs_human.game.current_player_symbol, "Incorrect current player symbol.")
 
     # def test_GameSession_get_match_should_return_game_with_players_set(self):
     #     game: HumanVsHuman = self.game_session.get_match()
