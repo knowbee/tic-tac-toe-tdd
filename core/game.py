@@ -1,3 +1,4 @@
+from core.player.bot_player import BotPlayer
 from core import GameState, Board, GameDisplay
 from core.player import HumanPlayer
 
@@ -42,16 +43,17 @@ class Game:
 
         while not self.game_state.finished(self.board):
             if self.current_player_symbol == self.player_one.symbol:
-                print("here in if")
                 self.handle_play(self.player_one)
             else:
-                print("here in else")
                 self.handle_play(self.player_two)
         self.end_game()
 
     def handle_play(self, player, **kwargs):
-        print(player)
-        spot = GameDisplay.get_player_spot(self.board.get_available_spots())
+        spot = None
+        if not isinstance(player, BotPlayer):
+            spot = GameDisplay.get_player_spot(
+                self.board.get_available_spots())
+
         player.play(board=self.board, spot=spot)
         GameDisplay.chosen_spot(player.symbol, spot)
         GameDisplay.show(self.board)

@@ -8,7 +8,7 @@ class BotPlayer(Player):
     def __init__(self):
         super().__init__()
 
-    def play(self, board: Board) -> int:
+    def play(self, board: Board, **kwargs) -> int:
         winning_spot: int = board.get_expected_winning_spot()
         if winning_spot is not None:
             board.grid[winning_spot] = self.symbol
@@ -18,6 +18,5 @@ class BotPlayer(Player):
         return random_spot
 
     def get_random_available_spot(self, board: Board) -> int:
-        print("here in get random")
         available_spot = board.get_available_spots()
         return random.choice(available_spot)
