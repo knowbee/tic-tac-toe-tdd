@@ -18,11 +18,11 @@ class MockGameDisplay:
 
 
 class MockGame:
-    def __init__(self, game_display=None):
+    def __init__(self, player_one, player_two, game_display=None):
         self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
-        self.player_one = None
-        self.player_two = None
+        self.player_one = player_one
+        self.player_two = player_two
 
     def set_player_symbols(self, first_player: str) -> None:
         if first_player == "X":
@@ -58,7 +58,7 @@ class MockGame:
 class TestHumanVsHumanGameSession(unittest.TestCase):
     def setUp(self):
         self.game_display = MockGameDisplay()
-        self.game = Game(game_display=self.game_display)
+        self.game = Game(player_one=HumanPlayer(), player_two=HumanPlayer(), game_display=self.game_display)
         self.game_session: GameSession = GameSession(self.game_display)
 
         self.human_vs_human = HumanVsHuman(game=self.game)
