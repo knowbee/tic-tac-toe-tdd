@@ -1,26 +1,30 @@
+from typing import List, Any
+
+
 class GameDisplay:
-    
     def __init__(self):
         self.message = None
 
-    @staticmethod
-    def show(board):
+    @classmethod
+    def show(cls, board) -> None:
+        formated_grid = cls.get_grid_with_nested_rows(board)
+        for y in list(range(board.size)):
+            row = ""
+            for x in list(range(board.size)):
+                if x != 0:
+                    row += " | "
+                row += "%1s" % formated_grid[y][x]
+            print(row)
 
-        result = (
-            " %s | %s | %s \n===+===+===\n %s | %s | %s \n===+===+===\n %s | %s | %s \n"
-            % (
-                board.grid[0],
-                board.grid[1],
-                board.grid[2],
-                board.grid[3],
-                board.grid[4],
-                board.grid[5],
-                board.grid[6],
-                board.grid[7],
-                board.grid[8],
-            )
-        )
-        print(result)
+    @staticmethod
+    def get_grid_with_nested_rows(board):
+        nested_rows: List[list] = []
+        count: int = 0
+        for i in range(board.size):
+            row: List[Any] = board.grid[count: count + board.size]
+            count += board.size
+            nested_rows.append(row)
+        return nested_rows
 
     @classmethod
     def game_over(cls):
@@ -28,12 +32,12 @@ class GameDisplay:
         print(cls.message)
 
     @classmethod
-    def chosen_spot(cls,symbol, spot):
+    def chosen_spot(cls, symbol, spot):
         cls.message = f"Player with symbol {symbol} has played in spot {spot}"
         print(cls.message)
 
     @classmethod
-    def winner(cls,symbol):
+    def winner(cls, symbol):
         cls.message = f"Player with symbol {symbol} won!"
         print(cls.message)
 
@@ -51,7 +55,8 @@ class GameDisplay:
 
     @classmethod
     def prompt_spot(cls, available_spots):
-        cls.message = "Choose one of these spots [%s]:" % ", ".join(available_spots)
+        cls.message = "Choose one of these spots [%s]:" % ", ".join(
+            available_spots)
         print(cls.message)
 
     @classmethod
@@ -63,7 +68,7 @@ class GameDisplay:
     def get_player_spot(cls, available_spots):
         cls.prompt_spot(available_spots)
         spot = input()
-        if cls.is_valid_spot(spot, available_spots) : 
+        if cls.is_valid_spot(spot, available_spots):
             return cls.format_input(spot)
         return cls.get_player_spot(available_spots)
 
@@ -81,9 +86,16 @@ class GameDisplay:
         first_player = input()
         valid_input = ["O", "X"]
         if not first_player in valid_input:
-            return cls.get_first_player(cls)
+            return cls.get_first_player()
         else:
             return first_player
+
+    @classmethod
+    def get_board_size(cls):
+        cls.message = "What board size do you want to play?"
+        print(cls.message)
+        size = input()
+        return cls.format_input(size)
 
     @classmethod
     def get_game_type(cls):

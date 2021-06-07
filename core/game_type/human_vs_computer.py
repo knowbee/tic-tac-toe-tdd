@@ -1,7 +1,10 @@
-from core import Game, GameDisplay
+from core import Game, GameDisplay, Board
 from core.player import HumanPlayer, BotPlayer
-class HumanVsComputer(Game):
-  def __init__(self):
-    super().__init__()
-    self.player_one = HumanPlayer()
-    self.player_two = BotPlayer()
+
+
+class HumanVsComputer:
+    def __init__(self, game: Game):
+        # super().__init__()
+        self.game = game
+        self.player_one = HumanPlayer()
+        self.player_two = BotPlayer()

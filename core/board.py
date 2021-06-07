@@ -1,22 +1,22 @@
 from typing import List, Any
+from cli.game_display import GameDisplay
 
 
 class Board:
-    def __init__(self):
-        self.size = 3
+    def __init__(self, size):
+        self.size = size
         self.grid = list(range(self.size * self.size))
-        # Hard-coded... Not scalable if we move to 4x4, 5x5, etc.
-        self.win_combinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
     def get_available_spots(self):
         available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]
         return available_spots
 
     def is_empty(self):
-        return len(self.get_available_spots()) == 9
+        if self.size is not None:
+            return len(self.get_available_spots()) == self.size ** 2
 
     def reset(self):
-        self.grid = list(range(9))
+        self.grid = list(range(self.size ** 2))
 
     def set_spot(self, spot: int, symbol: str) -> None:
         self.grid[spot] = symbol
@@ -28,40 +28,52 @@ class Board:
     def get_both_diagonals(self):
         return [self.top_left_to_bottom_right_diagonal(), self.bottom_left_to_top_right_diagonal()]
 
-    def is_win(self):
+    def get_all_combinations(self) -> List[list]:
         all_combinations: List[list] = []
         self._add_new_combinations(self.get_all_rows(), all_combinations)
         self._add_new_combinations(self.get_all_columns(), all_combinations)
         self._add_new_combinations(self.get_both_diagonals(), all_combinations)
+        return all_combinations
 
+    def is_win(self) -> bool:
+        all_combinations: List[list] = self.get_all_combinations()
         for combination in all_combinations:
             if self.has_unique_elements(combination):
                 return True
-
         return False
+
+    def get_expected_winning_spot(self) -> List[int]:
+        all_combinations: List[list] = self.get_all_combinations()
+        for combination in all_combinations:
+            if self.has_almost_unique_elements(combination):
+                return self.get_winning_spot(combination)
+
+    def get_winning_spot(self, combination: List):
+        winning_spot = [int(s) for s in combination if s != "X" and s != "O"][0]
+        return winning_spot
 
     def get_all_rows(self) -> List[list]:
         all_rows: List[list] = self.generate_board()
-
         return [self.get_elements_at_spots(row) for row in all_rows]
 
     def get_all_columns(self) -> List[list]:
         all_columns: List[list] = []
 
-        for i in range(self.size):  # i = 0
+        for i in range(self.size):
             column: List[int] = [i + j * self.size for j in range(self.size)]
             all_columns.append(self.get_elements_at_spots(column))
         return all_columns
 
     def generate_board(self) -> List[list]:
-        # TODO Improve algorithm. Do not hardcode first row.
-        first_row: List[int] = list(range(self.size))
+        size = self.size
+        if size is None:
+            size = 3
+
+        first_row: List[int] = list(range(size))
         all_rows: List[list] = [first_row]
-
-        for i in range(self.size - 1):
-            row: List[int] = [e + self.size for e in all_rows[-1]]
+        for i in range(size - 1):
+            row: List[int] = [e + size for e in all_rows[-1]]
             all_rows.append(row)
-
         return all_rows
 
     def top_left_to_bottom_right_diagonal(self) -> List[list]:
@@ -84,6 +96,9 @@ class Board:
 
     def has_unique_elements(self, elements: List[int]) -> bool:
         return len(set(elements)) == 1
+
+    def has_almost_unique_elements(self, elements: List[int]) -> bool:
+        return len(set(elements)) == 2
 
     def get_elements_at_spots(self, spots: List[int]) -> List[Any]:
         return [self.grid[s] for s in spots]

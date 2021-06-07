@@ -1,29 +1,30 @@
 import unittest
 from cli import GameDisplay
 from core import Board
+from core.player import HumanPlayer, BotPlayer
+
+
+class MockGameDisplay:
+    def __init__(self):
+        self.message = None
+
+    def get_board_size(self):
+        self.message = "What board size you want to play?"
+        return 3
+
+
+class MockGame:
+    def __init__(self, player_one, player_two, game_display=None):
+        self.game_display = MockGameDisplay
+        self.board = Board(size=self.game_display.get_board_size(self))
+        self.player_one = player_one
+        self.player_two = player_two
 
 
 class TestGameDisplay(unittest.TestCase):
     def setUp(self):
-        self.board = Board()
-
-    def test_game_board_is_displayed(self):
-        board = " 0 | 1 | 2 \n===+===+===\n 3 | 4 | 5 \n===+===+===\n 6 | 7 | 8 \n\n"
-        self.assertEqual(
-            board,
-            " %s | %s | %s \n===+===+===\n %s | %s | %s \n===+===+===\n %s | %s | %s \n\n"
-            % (
-                self.board.grid[0],
-                self.board.grid[1],
-                self.board.grid[2],
-                self.board.grid[3],
-                self.board.grid[4],
-                self.board.grid[5],
-                self.board.grid[6],
-                self.board.grid[7],
-                self.board.grid[8],
-            ),
-        )
+        self.game = MockGame(player_one=HumanPlayer(), player_two=HumanPlayer(), game_display=MockGameDisplay())
+        self.board = self.game.board
 
     def test_game_is_over_message(self):
         GameDisplay.game_over()
@@ -79,6 +80,11 @@ class TestGameDisplay(unittest.TestCase):
             "Who plays first, X or O?",
             "The game should give user a chance to pick who should go first",
         )
+
+    def test_GameDisplay_get_board_size_asks_board_size(self):
+        size = MockGameDisplay.get_board_size(MockGameDisplay)
+        self.assertEqual(MockGameDisplay.message, "What board size you want to play?")
+        self.assertEqual(self.board.size, size)
 
 
 if __name__ == "__main__":

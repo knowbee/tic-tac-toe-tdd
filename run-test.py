@@ -1,4 +1,5 @@
 import unittest
+
 from tests.test_board import TestBoard
 from tests.test_game_display import TestGameDisplay
 from tests.test_game_state import TestGameState
