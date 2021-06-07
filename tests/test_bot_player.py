@@ -21,7 +21,10 @@ class TestBot(unittest.TestCase):
 
     def test_bot_player_minimized_spot_returns_best_spot_and_best_score(self):
         self.bot_player.symbol = "X"
-        self.board.grid = ["0", "O", "X", "O", "X", "5", "O", "7", "8"]
+        self.board.grid = [
+            "0", "O", "X", 
+            "O", "X", "5", 
+            "O", "7", "8"]
         self.assertEqual(self.bot_player.minimized_spot(self.board), ["0", 1])
 
 
