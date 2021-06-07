@@ -51,8 +51,8 @@ class Game:
     def handle_play(self, player, **kwargs):
         spot = None
         if not isinstance(player, BotPlayer):
-            spot = GameDisplay.get_player_spot(
-                self.board.get_available_spots())
+            spot = GameDisplay.get_player_spot(self.board.get_available_spots())
+            GameDisplay.chosen_spot(player.symbol, spot)
 
         player.play(board=self.board, spot=spot)
         GameDisplay.chosen_spot(player.symbol, spot)

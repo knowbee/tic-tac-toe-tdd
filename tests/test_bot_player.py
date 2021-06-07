@@ -19,34 +19,10 @@ class TestBot(unittest.TestCase):
         self.bot_player.symbol = "X"
         self.assertEqual(self.bot_player.symbol, "X")
 
-    # def test_Board_is_empty_when_BotPlayer_with_symbol_X_makes_a_move_returns_False(self):
-    #     self.assertTrue(self.board.is_empty())
-
-    #     self.bot_player.symbol = "X"
-    #     self.bot_player.play(self.board)
-
-    #     self.assertFalse(self.board.is_empty())
-
-    def test_BotPlayer_get_random_spot_from_available_spots(self):
-        self.board.grid = ["X", "O", "X", "O", "X", "5", "O", "7", "8"]
-        available_spots = self.board.get_available_spots()
-        spot = self.bot_player.get_random_available_spot(self.board)
-        chosen_spot_by_computer = spot in available_spots
-
-        self.assertTrue(chosen_spot_by_computer)
-
-    def test_BotPlayer_play_makes_a_play_at_the_expected_winning_spot_HumanPlayer_would_choose(self):
-        self.board.size = 3
-        self.board.grid = ["X", "1", "2", "3", "4", "5", "X", "O", "8"]
-        next_board_state = ["X", "1", "2", "X", "4", "5", "X", "O", "8"]
-        winning_spot = self.board.get_expected_winning_spot()
-
-        self.assertEqual(winning_spot, 3)
-
+    def test_minimized_spot_case_losing(self):
         self.bot_player.symbol = "X"
-        self.bot_player.play(self.board)
-
-        self.assertEqual(self.board.grid, next_board_state)
+        self.board.grid = ["0", "O", "X", "O", "X", "5", "O", "7", "8"]
+        self.assertEqual(self.bot_player.minimized_spot(self.board), ["0", 1])
 
 
 if __name__ == "__main__":
