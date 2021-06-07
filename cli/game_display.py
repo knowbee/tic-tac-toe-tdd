@@ -21,7 +21,7 @@ class GameDisplay:
         nested_rows: List[list] = []
         count: int = 0
         for i in range(board.size):
-            row: List[Any] = board.grid[count : count + board.size]
+            row: List[Any] = board.grid[count: count + board.size]
             count += board.size
             nested_rows.append(row)
         return nested_rows
@@ -55,7 +55,8 @@ class GameDisplay:
 
     @classmethod
     def prompt_spot(cls, available_spots):
-        cls.message = "Choose one of these spots [%s]:" % ", ".join(available_spots)
+        cls.message = "Choose one of these spots [%s]:" % ", ".join(
+            available_spots)
         print(cls.message)
 
     @classmethod
@@ -85,7 +86,7 @@ class GameDisplay:
         first_player = input()
         valid_input = ["O", "X"]
         if not first_player in valid_input:
-            return cls.get_first_player(cls)
+            return cls.get_first_player()
         else:
             return first_player
 
