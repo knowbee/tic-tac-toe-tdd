@@ -31,7 +31,7 @@ class BotPlayer(Player):
             if best_score == None or score < best_score:
                 best_score = score
                 best_move = move
-        return [best_score, best_move]
+        return best_score, best_move
 
     def maximizer(self, board: Board) -> Tuple:
         cloned_board = copy.deepcopy(board)
@@ -50,7 +50,7 @@ class BotPlayer(Player):
             if best_score == None or score > best_score:
                 best_score = score
                 best_move = move
-        return [best_score, best_move]
+        return best_score, best_move
 
     def get_score(self, board: Board) -> int:
         winner = self.game_state.get_winner(board)
