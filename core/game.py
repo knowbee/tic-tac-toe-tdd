@@ -3,13 +3,13 @@ from core.player import HumanPlayer
 
 
 class Game:
-    def __init__(self, game_display=None):
+    def __init__(self, player_one, player_two, game_display=None):
         self.game_display = GameDisplay
         self.board = Board(size=self.game_display.get_board_size())
         self.game_state = GameState()
         self.current_player_symbol = None
-        self.player_one = None
-        self.player_two = None
+        self.player_one = player_one
+        self.player_two = player_two
 
     def play(self):
         GameDisplay.show(self.board)
@@ -18,8 +18,8 @@ class Game:
         GameDisplay.game_over()
 
     def set_game_players(self, first_player: str):
-        self.set_player_symbols(first_player)
         self._initiate_current_player_symbol(first_player)
+        self.set_player_symbols(first_player)
 
     def set_player_symbols(self, first_player: str) -> None:
         if first_player == "X":
@@ -28,6 +28,8 @@ class Game:
         else:
             self.player_two.symbol = "X"
             self.player_one.symbol = "O"
+
+        print(self.player_one.symbol, self.player_two.symbol, self.current_player_symbol)
 
     def _initiate_current_player_symbol(self, first_player: str) -> None:
         self.current_player_symbol = first_player

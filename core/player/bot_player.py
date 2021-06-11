@@ -3,6 +3,7 @@ from .player import Player
 from core import GameDisplay, Board, GameState
 from typing import List, Optional, Tuple
 import copy
+import math
 
 
 class BotPlayer(Player):
@@ -31,6 +32,7 @@ class BotPlayer(Player):
             if best_score == None or score < best_score:
                 best_score = score
                 best_move = move
+                return best_score, best_move
         return best_score, best_move
 
     def maximizer(self, board: Board) -> Tuple:
@@ -50,6 +52,8 @@ class BotPlayer(Player):
             if best_score == None or score > best_score:
                 best_score = score
                 best_move = move
+                return best_score, best_move
+
         return best_score, best_move
 
     def get_score(self, board: Board) -> int:
@@ -64,6 +68,7 @@ class BotPlayer(Player):
     def play(self, board: Board, **kwargs) -> int:
 
         score, move = self.maximizer(board)
+        print("opponent", self.opponent_symbol)
         board.set_spot(int(move), self.symbol)
         return move
 

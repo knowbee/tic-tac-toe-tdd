@@ -6,6 +6,7 @@ class HumanPlayer(Player):
         super().__init__()
 
     def play(self, board, spot):
+        print("opponent", self.symbol)
         if board.grid[spot] != "X" and board.grid[spot] != "O":
             board.grid[spot] = self.symbol
         else:

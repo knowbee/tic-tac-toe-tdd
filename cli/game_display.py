@@ -84,7 +84,7 @@ class GameDisplay:
         cls.prompt_first_player()
         first_player = input()
         valid_input = ["O", "X"]
-        if not first_player in valid_input:
+        if first_player not in valid_input:
             return cls.get_first_player(cls)
         else:
             return first_player
