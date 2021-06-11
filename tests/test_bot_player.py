@@ -6,26 +6,18 @@ from core.player import BotPlayer
 class TestBot(unittest.TestCase):
     def setUp(self):
         self.bot_player = BotPlayer()
+        self.bot_player.symbol = "X"
+        self.bot_player.opponent_symbol = "O"
         self.board = Board(size=3)
 
-    def test_BotPlayer_symbol_is_None(self):
-        self.assertIsNone(self.bot_player.symbol)
+    def test_BotPlayer_symbol_is_Not_None(self):
+        self.assertIsNotNone(self.bot_player.symbol)
 
-    def test_BotPlayer_set_symbol_O_to_bot_player(self):
-        self.bot_player.symbol = "O"
-        self.assertEqual(self.bot_player.symbol, "O")
-
-    def test_BotPlayer_set_symbol_X_to_bot_player(self):
-        self.bot_player.symbol = "X"
+    def test_BotPlayer_symbol_is_O(self):
         self.assertEqual(self.bot_player.symbol, "X")
 
-    # def test_Board_is_empty_when_BotPlayer_with_symbol_X_makes_a_move_returns_False(self):
-    #     self.assertTrue(self.board.is_empty())
-
-    #     self.bot_player.symbol = "X"
-    #     self.bot_player.play(self.board)
-
-    #     self.assertFalse(self.board.is_empty())
+    def test_BotPlayer_opponent_symbol_is_X(self):
+        self.assertEqual(self.bot_player.opponent_symbol, "O")
 
     def test_BotPlayer_get_random_spot_from_available_spots(self):
         self.board.grid = ["X", "O", "X", "O", "X", "5", "O", "7", "8"]
@@ -35,18 +27,16 @@ class TestBot(unittest.TestCase):
 
         self.assertTrue(chosen_spot_by_computer)
 
-    def test_BotPlayer_play_makes_a_play_at_the_expected_winning_spot_HumanPlayer_would_choose(self):
-        self.board.size = 3
-        self.board.grid = ["X", "1", "2", "3", "4", "5", "X", "O", "8"]
-        next_board_state = ["X", "1", "2", "X", "4", "5", "X", "O", "8"]
-        winning_spot = self.board.get_expected_winning_spot()
+    def test_BotPlayer_get_score_for_empty_board_should_be_0(self):
+        self.assertEqual(self.bot_player.get_score(self.board), 0)
 
-        self.assertEqual(winning_spot, 3)
+    def test_BotPlayer_maximizer_should_return_1_and_best_spot_for_BotPlayer(self):
+        self.board.grid = ["X", "O", "X", "O", "X", "5", "O", "7", "8"]
+        self.assertEqual(self.bot_player.maximizer(self.board), (1, "5"))
 
-        self.bot_player.symbol = "X"
-        self.bot_player.play(self.board)
-
-        self.assertEqual(self.board.grid, next_board_state)
+    def test_BotPlayer_minimizer_should_return_minus_1_and_best_spot_for_HumanPlayer(self):
+        self.board.grid = ["0", "O", "X", "O", "X", "5", "O", "7", "8"]
+        self.assertEqual(self.bot_player.minimizer(self.board), (-1, "0"))
 
 
 if __name__ == "__main__":
