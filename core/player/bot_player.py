@@ -10,64 +10,72 @@ class BotPlayer(Player):
     def __init__(self):
         super().__init__()
         self.game_state = GameState()
+        self.opponent_symbol = None
+
+    def set_up(self):
         if self.symbol == "X":
             self.opponent_symbol = "O"
         else:
             self.opponent_symbol = "X"
 
-    def minimizer(self, board: Board) -> Tuple:
-        cloned_board = copy.deepcopy(board)
+    def minimax(self, board: Board, is_max: bool) -> Tuple:
 
+        cloned_board = copy.deepcopy(board)
+        if is_max:
+            return self.maximizer(cloned_board)
+        return self.minimizer(cloned_board)
+
+    def minimizer(self, board):
         best_score: Optional[int] = None
         best_move: Optional[int] = None
-
-        for move in cloned_board.get_available_spots():
-            cloned_board.set_spot(int(move), self.opponent_symbol)
-            if self.game_state.finished(cloned_board):
-                score = self.get_score(cloned_board)
-            else:
-                score, move_position = self.maximizer(cloned_board)
-            cloned_board = copy.deepcopy(board)
-
-            if best_score == None or score < best_score:
-                best_score = score
-                best_move = move
-                return best_score, best_move
-        return best_score, best_move
-
-    def maximizer(self, board: Board) -> Tuple:
         cloned_board = copy.deepcopy(board)
-
-        best_score: Optional[int] = None
-        best_move: Optional[int] = None
 
         for move in cloned_board.get_available_spots():
             cloned_board.set_spot(int(move), self.symbol)
             if self.game_state.finished(cloned_board):
                 score = self.get_score(cloned_board)
             else:
-                score, move_position = self.minimizer(cloned_board)
+                score, move_position = self.minimax(cloned_board, True)
             cloned_board = copy.deepcopy(board)
 
             if best_score == None or score > best_score:
                 best_score = score
                 best_move = move
-                return best_score, best_move
+
+        return best_score, best_move
+
+    def maximizer(self, board):
+        best_score: Optional[int] = None
+        best_move: Optional[int] = None
+        cloned_board = copy.deepcopy(board)
+
+        for move in cloned_board.get_available_spots():
+            cloned_board.set_spot(int(move), self.opponent_symbol)
+            if self.game_state.finished(cloned_board):
+                score = self.get_score(cloned_board)
+            else:
+                score, move_position = self.minimax(cloned_board, False)
+            cloned_board = copy.deepcopy(board)
+
+            if best_score == None or score < best_score:
+                best_score = score
+                best_move = move
 
         return best_score, best_move
 
     def get_score(self, board: Board) -> int:
-        winner = self.game_state.get_winner(board)
-        if winner == self.symbol:
-            return 1
-        elif winner == self.opponent_symbol:
-            return -1
+        if self.game_state.finished(board):
+            winner = self.game_state.get_winner(board)
+            if winner == self.symbol:
+                return 1
+            elif winner == self.opponent_symbol:
+                return -1
 
         return 0
 
     def play(self, board: Board, **kwargs) -> int:
-
-        score, move = self.maximizer(board)
+        self.set_up()
+        score, move = self.minimax(board, False)
         print("opponent", self.opponent_symbol)
         board.set_spot(int(move), self.symbol)
         return move
