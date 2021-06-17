@@ -1,4 +1,5 @@
 from .player import Player
+from core.symbols import Symbols
 
 
 class HumanPlayer(Player):
@@ -6,8 +7,7 @@ class HumanPlayer(Player):
         super().__init__()
 
     def play(self, board, spot):
-        print("opponent", self.symbol)
-        if board.grid[spot] != "X" and board.grid[spot] != "O":
+        if board.grid[spot] != Symbols.X.name and board.grid[spot] != Symbols.O.name:
             board.grid[spot] = self.symbol
         else:
             board.grid[spot] = None

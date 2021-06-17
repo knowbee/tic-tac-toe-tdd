@@ -9,6 +9,7 @@ from tests.test_bot_player import TestBot
 from tests.test_human_vs_computer import TestHumanVsComputer
 from tests.test_human_vs_computer_game_session import TestHumanVsComputerGameSession
 from tests.test_human_vs_human_game_session import TestHumanVsHumanGameSession
+from tests.test_minimax import TestMiniMax
 
 
 if __name__ == "__main__":
