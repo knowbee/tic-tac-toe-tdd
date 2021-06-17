@@ -18,9 +18,9 @@ class BotPlayer(Player):
         else:
             self.opponent_symbol = "X"
 
-    def alpha_beta(self, board, alpha, beta):
+    def alpha_beta_prunning(self, board, alpha, beta):
         cloned_board = copy.deepcopy(board)
-        return self.maximizer_alpha_beta(cloned_board, alpha, beta)
+        return self.maximizer_alpha_beta_prunning(cloned_board, alpha, beta)
 
     def minimax(self, board: Board, is_max) -> Tuple:
 
@@ -29,7 +29,7 @@ class BotPlayer(Player):
             return self.maximizer(cloned_board)
         return self.minimizer(cloned_board)
 
-    def minimizer_alpha_beta(self, board: Board, alpha, beta) -> Tuple:
+    def minimizer_alpha_beta_prunning(self, board: Board, alpha, beta) -> Tuple:
         best_score: int = 100
         best_move: Optional[int] = None
         cloned_board = copy.deepcopy(board)
@@ -39,7 +39,7 @@ class BotPlayer(Player):
             if self.game_state.finished(cloned_board):
                 return self.get_score(cloned_board), move
             else:
-                score, move_position = self.maximizer_alpha_beta(cloned_board, alpha, beta)
+                score, move_position = self.alpha_beta_prunning(cloned_board, alpha, beta)
                 if score < best_score:
                     best_move = move
                     best_score = score
@@ -52,7 +52,7 @@ class BotPlayer(Player):
 
         return best_score, best_move
 
-    def maximizer_alpha_beta(self, board: Board, alpha, beta):
+    def maximizer_alpha_beta_prunning(self, board: Board, alpha, beta):
 
         best_score: int = -100
         best_move: Optional[int] = None
@@ -63,7 +63,7 @@ class BotPlayer(Player):
             if self.game_state.finished(cloned_board):
                 return self.get_score(cloned_board), int(move)
             else:
-                score, move_position = self.minimizer_alpha_beta(cloned_board, alpha, beta)
+                score, move_position = self.alpha_beta_prunning(cloned_board, alpha, beta)
                 if score > best_score:
                     best_move = move
                     best_score = score
@@ -126,8 +126,8 @@ class BotPlayer(Player):
 
     def play(self, board: Board, **kwargs) -> int:
         self.set_up()
-        score, move = self.minimax(board, False)
-        # score, move = self.alpha_beta(board, -100, 100)
+        # score, move = self.minimax(board, False)
+        score, move = self.alpha_beta_prunning(board, -100, 100)
         board.set_spot(int(move), self.symbol)
         return move
 
