@@ -1,5 +1,6 @@
 from core import GameState, Board, GameDisplay
 from core.player import HumanPlayer
+from core.symbols import Symbols
 
 
 class Game:
@@ -22,12 +23,12 @@ class Game:
         self.set_player_symbols(first_player)
 
     def set_player_symbols(self, first_player: str) -> None:
-        if first_player == "X":
-            self.player_two.symbol = "O"
-            self.player_one.symbol = "X"
+        if first_player == Symbols(first_player).name:
+            self.player_two.symbol = Symbols(first_player).value
+            self.player_one.symbol = Symbols(first_player).name
         else:
-            self.player_two.symbol = "X"
-            self.player_one.symbol = "O"
+            self.player_two.symbol = Symbols(first_player).name
+            self.player_one.symbol = Symbols(first_player).value
 
         print(self.player_one.symbol, self.player_two.symbol, self.current_player_symbol)
 
@@ -35,10 +36,10 @@ class Game:
         self.current_player_symbol = first_player
 
     def handle_turns(self):
-        if self.current_player_symbol == "X":
-            self.current_player_symbol = "O"
+        if self.current_player_symbol == Symbols(self.current_player_symbol).name:
+            self.current_player_symbol = Symbols(self.current_player_symbol).value
         else:
-            self.current_player_symbol = "X"
+            self.current_player_symbol = Symbols(self.current_player_symbol).name
 
     def start(self):
 
