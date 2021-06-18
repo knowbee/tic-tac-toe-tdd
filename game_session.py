@@ -1,4 +1,3 @@
-# from core.game_type import HumanVsHuman, HumanVsComputer
 from core import Game, GameDisplay
 from core.player import HumanPlayer, BotPlayer
 
@@ -25,4 +24,4 @@ class GameSession:
 if __name__ == "__main__":
     game_session: GameSession = GameSession(GameDisplay)
     match = game_session.get_match()
-    match.play_game()
+    match.play()

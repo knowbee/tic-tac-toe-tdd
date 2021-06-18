@@ -6,7 +6,7 @@ class GameDisplay:
         self.message = None
 
     @classmethod
-    def show(cls, board) -> None:
+    def show(cls, board):
         formated_grid = cls.get_grid_with_nested_rows(board)
         for y in list(range(board.size)):
             row = ""
@@ -18,13 +18,13 @@ class GameDisplay:
 
     @staticmethod
     def get_grid_with_nested_rows(board):
-        nested_rows: List[list] = []
-        count: int = 0
+        grid: List[list] = []
+        count = 0
         for i in range(board.size):
-            row: List[Any] = board.grid[count: count + board.size]
+            row: List[Any] = board.grid[count : count + board.size]
             count += board.size
-            nested_rows.append(row)
-        return nested_rows
+            grid.append(row)
+        return grid
 
     @classmethod
     def game_over(cls):
@@ -55,8 +55,7 @@ class GameDisplay:
 
     @classmethod
     def prompt_spot(cls, available_spots):
-        cls.message = "Choose one of these spots [%s]:" % ", ".join(
-            available_spots)
+        cls.message = "Choose one of these spots [%s]:" % ", ".join(available_spots)
         print(cls.message)
 
     @classmethod
@@ -85,8 +84,8 @@ class GameDisplay:
         cls.prompt_first_player()
         first_player = input()
         valid_input = ["O", "X"]
-        if not first_player in valid_input:
-            return cls.get_first_player()
+        if first_player not in valid_input:
+            return cls.get_first_player(cls)
         else:
             return first_player
 
