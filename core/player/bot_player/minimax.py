@@ -42,8 +42,6 @@ class MiniMax:
         return self.min_score, self.min_move
 
     def maximizer(self, board: Board, alpha: int, beta: int) -> Tuple:
-        best_score = -100
-        best_move = None
         cloned_board = copy.deepcopy(board)
         for move in cloned_board.get_available_spots():
             cloned_board.set_spot(int(move), self.symbol.value)
