@@ -1,7 +1,7 @@
 import random
-from .player import Player
+from ..player import Player
 from core import GameDisplay, Board
-from core.minimax import MiniMax
+from .minimax import MiniMax
 from typing import List, Optional, Tuple
 import copy
 import math
@@ -13,7 +13,7 @@ class BotPlayer(Player):
 
     def play(self, board: Board, **kwargs) -> int:
         minimax = MiniMax(self.symbol)
-        score, move = minimax.get_best_score(board)
+        score, move = minimax.get_best_spot(board)
         board.set_spot(int(move), self.symbol)
         return move
 

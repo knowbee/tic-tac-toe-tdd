@@ -1,5 +1,5 @@
 from .player import Player
-from core.symbols import Symbols
+from .symbols import Symbols
 
 
 class HumanPlayer(Player):

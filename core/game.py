@@ -1,6 +1,6 @@
 from core import GameState, Board, GameDisplay
 from core.player import HumanPlayer
-from core.symbols import Symbols
+from core.player.symbols import Symbols
 
 
 class Game:
