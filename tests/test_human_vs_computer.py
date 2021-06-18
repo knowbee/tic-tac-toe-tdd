@@ -1,5 +1,5 @@
 import unittest
-from core import Board
+from core import Board, Game
 from core.player import HumanPlayer, BotPlayer
 
 
@@ -20,11 +20,11 @@ class MockGameState:
 
 
 class MockGame:
-    def __init__(self, game_display=None):
+    def __init__(self, player_one, player_two, game_display=None):
         self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
-        self.player_one = None
-        self.player_two = None
+        self.player_one = player_one
+        self.player_two = player_two
         self.game_state = MockGameState
 
     def set_player_symbols(self, first_player: str) -> None:
@@ -63,20 +63,10 @@ class MockGame:
         pass
 
 
-class HumanVsComputer(MockGame):
-    def __init__(self):
-        super().__init__()
-        self.player_one = HumanPlayer()
-        self.player_two = BotPlayer()
-
-
 class TestHumanVsComputer(unittest.TestCase):
     def setUp(self):
-        self.game = HumanVsComputer()
+        self.game = MockGame(player_one=HumanPlayer(), player_two=BotPlayer(), game_display=MockGameDisplay())
         self.board = Board(size=3)
-
-    def test_HumanVsComputer_is_Game_subclass(self):
-        self.assertTrue(issubclass(HumanVsComputer, MockGame))
 
     def test_HumanVsComputer_inherits_play_method(self):
         self.assertIsNotNone(self.game.play)

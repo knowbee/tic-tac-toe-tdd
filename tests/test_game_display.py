@@ -1,6 +1,7 @@
 import unittest
 from cli import GameDisplay
 from core import Board
+from core.player import HumanPlayer, BotPlayer
 
 
 class MockGameDisplay:
@@ -13,16 +14,16 @@ class MockGameDisplay:
 
 
 class MockGame:
-    def __init__(self, game_display=None):
+    def __init__(self, player_one, player_two, game_display=None):
         self.game_display = MockGameDisplay
         self.board = Board(size=self.game_display.get_board_size(self))
-        self.player_one = None
-        self.player_two = None
+        self.player_one = player_one
+        self.player_two = player_two
 
 
 class TestGameDisplay(unittest.TestCase):
     def setUp(self):
-        self.game = MockGame(MockGameDisplay)
+        self.game = MockGame(player_one=HumanPlayer(), player_two=HumanPlayer(), game_display=MockGameDisplay())
         self.board = self.game.board
 
     def test_game_is_over_message(self):

@@ -88,8 +88,3 @@ class TestHumanVsHumanGameSession(unittest.TestCase):
     def test_HumanVsHuman_set_game_players_to_X_current_player_symbol_should_be_X(self):
         self.human_vs_human.set_game_players("X")
         self.assertEqual("X", self.human_vs_human.current_player_symbol, "Incorrect current player symbol.")
-
-    # def test_GameSession_get_match_should_return_game_with_players_set(self):
-    #     game: HumanVsHuman = self.game_session.get_match()
-    #     self.assertEqual("X", game.player_one.symbol, "Incorrect first player")
-    #     self.assertEqual("O", game.player_two.symbol, "Incorrect second player")
