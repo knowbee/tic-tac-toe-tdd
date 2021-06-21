@@ -60,7 +60,7 @@ class GameDisplay:
 
     @classmethod
     def prompt_first_player(cls):
-        cls.message = "Who plays first, X or O?"
+        cls.message = "Choose symbol, X or O?"
         print(cls.message)
 
     @classmethod
@@ -96,13 +96,12 @@ class GameDisplay:
         size = input()
         return cls.format_input(size)
 
-    @classmethod
-    def get_game_type(cls):
-        game_types = cls.game_types()
+    def get_game_type(self):
+        game_types = self.game_types()
         game_type = input()
-        game_type_index = cls.handle_game_type_input(game_type)
+        game_type_index = self.handle_game_type_input(game_type)
         if game_type_index == None or not game_types[game_type_index] in game_types:
-            return cls.get_game_type(cls)
+            return self.get_game_type()
         else:
             return game_type_index
 
