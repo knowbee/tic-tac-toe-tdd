@@ -59,7 +59,7 @@ code {
 /*
 * Box
 */
-.board__cell {
+.board__grid {
   display: flex;
   align-items: center;
   justify-content: center;

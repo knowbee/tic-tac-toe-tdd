@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Cell from './Cell.jsx';
+import Grid from './Grid.jsx';
 import axios from 'axios';
 
 const Board = ({ playerSymbol, boardSize, gameType }) => {
-  const [cells, setCells] = useState([...Array(boardSize ** 2).keys()]);
+  const [grids, setGrids] = useState([...Array(boardSize ** 2).keys()]);
   const [winner, setWinner] = useState(null);
   const [tie, setTie] = useState('');
 
@@ -16,21 +16,21 @@ const Board = ({ playerSymbol, boardSize, gameType }) => {
   const restartGame = () => {
     window.location.reload();
   };
-  const handleCellClick = async (move) => {
+  const handleGridClick = async (move) => {
     if (!winner) {
-      cells[move] = playerSymbol;
+      grids[move] = playerSymbol;
       const res = await axios.post('https://36a50d7697aa.ngrok.io/play', {
         game_type: parseInt(gameType),
         board_size: parseInt(boardSize),
         first_player: playerSymbol,
-        board: cells,
+        board: grids,
       });
       parseResults(res.data);
     }
   };
 
   const parseResults = (data) => {
-    setCells(data.board);
+    setGrids(data.board);
     if (data.finished) {
       setWinner(data.winner);
 
@@ -57,8 +57,8 @@ const Board = ({ playerSymbol, boardSize, gameType }) => {
           </h2>
         )}
         <div className="board-row">
-          {cells.map((cell, i) => (
-            <Cell key={i} value={cells[i]} onClick={() => handleCellClick(cell)} data-test={`cell-${i}`} />
+          {grids.map((grid, i) => (
+            <Grid key={i} value={grids[i]} onClick={() => handleGridClick(grid)} data-test={`grid-${i}`} />
           ))}
         </div>
 

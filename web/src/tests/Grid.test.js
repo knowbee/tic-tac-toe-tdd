@@ -1,5 +1,5 @@
 import React from 'react';
-import Cell from '../components/Cell';
+import Grid from '../components/Grid';
 import Enzyme, { shallow } from 'enzyme';
 import EnzymeAdapter from '@wojtekmaj/enzyme-adapter-react-17';
 
@@ -11,18 +11,18 @@ Enzyme.configure({
  * @function setup
  * @returns {ShallowWrapper}
  */
-const setup = () => shallow(<Cell />);
+const setup = () => shallow(<Grid />);
 let wrapper = setup();
 
 const findByTestAttribute = (val) => {
   return wrapper.find(`[data-test='${val}']`);
 };
-describe('Cell', () => {
+describe('Grid', () => {
   test('renders  without crashing', () => {
-    expect(findByTestAttribute('cell').length).toBe(1);
+    expect(findByTestAttribute('grid').length).toBe(1);
   });
 
   test('has content', () => {
-    expect(findByTestAttribute('cell').text()).toBe('');
+    expect(findByTestAttribute('grid').text()).toBe('');
   });
 });

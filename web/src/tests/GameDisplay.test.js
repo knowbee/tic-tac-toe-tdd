@@ -22,9 +22,9 @@ describe('GameDisplay', () => {
     expect(findByTestAttribute('board-container').length).toBe(1);
   });
 
-  test('renders cells', () => {
+  test('renders grids', () => {
     for (let index = 0; index < 9; index++) {
-      expect(findByTestAttribute(`cell-${index}`).length).toBe(1);
+      expect(findByTestAttribute(`grid-${index}`).length).toBe(1);
     }
   });
 });
