@@ -47,13 +47,6 @@ class MockGame:
         self.current_player_symbol = first_player
 
 
-class HumanVsHuman(MockGame):
-    def __init__(self):
-        super().__init__()
-        self.player_one = HumanPlayer()
-        self.player_two = HumanPlayer()
-
-
 class HumanVsComputer(MockGame):
     def __init__(self):
         super().__init__()

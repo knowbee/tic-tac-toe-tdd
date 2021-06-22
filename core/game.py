@@ -4,7 +4,7 @@ from core.player.symbols import Symbols
 
 
 class Game:
-    def __init__(self, player_one, player_two, game_display=None):
+    def __init__(self, player_one, player_two, game_display):
         self.game_display = GameDisplay
         self.board = Board(size=self.game_display.get_board_size())
         self.game_state = GameState()
@@ -42,7 +42,6 @@ class Game:
             self.current_player_symbol = Symbols(self.current_player_symbol).name
 
     def start(self):
-
         while not self.game_state.finished(self.board):
             if self.current_player_symbol == self.player_one.symbol:
                 self.handle_play(self.player_one)

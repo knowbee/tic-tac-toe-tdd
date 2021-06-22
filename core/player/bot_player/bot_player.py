@@ -14,7 +14,8 @@ class BotPlayer(Player):
     def play(self, board: Board, **kwargs) -> int:
         minimax = MiniMax(self.symbol)
         score, move = minimax.get_best_spot(board)
-        board.set_spot(int(move), self.symbol)
+        if move is not None:
+            board.set_spot(int(move), self.symbol)
         return move
 
     def get_random_available_spot(self, board: Board) -> int:

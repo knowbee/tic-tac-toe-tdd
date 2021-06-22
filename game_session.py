@@ -14,7 +14,7 @@ class GameSession:
             return Game(player_one=HumanPlayer(), player_two=BotPlayer(), game_display=GameDisplay())
 
     def get_match(self):
-        game_type: int = self.game_display.get_game_type()
+        game_type: int = self.game_display.get_game_type(self.game_display)
         game = self.get_game(game_type)
         first_player: str = self.game_display.get_first_player()
         game.set_game_players(first_player)
