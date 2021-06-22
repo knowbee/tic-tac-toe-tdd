@@ -3,15 +3,15 @@ from core import Board, GameState, Game, Symbols
 from core.player import HumanPlayer, BotPlayer
 from flask_cors import CORS
 
-app = Flask(__name__, static_url_path="", static_folder="web/build", template_folder="web/build")
+app = Flask(__name__)
 CORS(app)
 game_state = GameState()
 player = BotPlayer()
 
 
 @app.route("/")
-def hello():
-    return render_template("index.html")
+def home():
+    return jsonify({"message": "Welcome"})
 
 
 @app.route("/play", methods=["POST"])
