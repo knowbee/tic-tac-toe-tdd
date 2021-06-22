@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-from core import Board, GameState, Game, Symbols
+from core import Board, GameState, Symbols
 from core.player import HumanPlayer, BotPlayer
 from flask_cors import CORS
 import json
