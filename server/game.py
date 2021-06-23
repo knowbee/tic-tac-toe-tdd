@@ -1,25 +1,9 @@
-from flask import Flask, jsonify, render_template, request
-from core import Board, GameState, Symbols
 from core.player import HumanPlayer, BotPlayer
-from flask_cors import CORS
-import json
+from core.board import Board
+from core.game_state import GameState
+from core import Symbols
 import os
-
-app = Flask(__name__)
-CORS(app)
-
-
-@app.route("/")
-def home():
-    return jsonify({"message": "Welcome"})
-
-
-@app.route("/play", methods=["POST"])
-def play():
-    game = Game(request.json["first_player"], request.json["board_size"], request.json["move"], request.remote_addr)
-    game.play()
-    game.clean_up()
-    return jsonify({"finished": game.is_finished(), "winner": game.winner(), "board": list(game.board.grid)})
+import json
 
 
 class Game:
@@ -73,7 +57,3 @@ class Game:
 
     def winner(self) -> str:
         return self.game_state.get_winner(self.board)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
