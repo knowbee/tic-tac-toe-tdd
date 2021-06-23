@@ -1,22 +1,30 @@
-from core import GameState, Board, GameDisplay
 from core.player import HumanPlayer
 from core.player.symbols import Symbols
+from cli.game_display import GameDisplay
+from core.game_state import GameState
 
 
 class Game:
-    def __init__(self, player_one, player_two, game_display):
-        self.game_display = GameDisplay
-        self.board = Board(size=self.game_display.get_board_size())
-        self.game_state = GameState()
+    def __init__(
+        self,
+        player_one,
+        player_two,
+        game_display: GameDisplay = None,
+        board=None,
+        game_state: GameState = None,
+    ):
+        self.game_display = game_display
+        self.board = board
+        self.game_state = game_state
         self.current_player_symbol = None
         self.player_one = player_one
         self.player_two = player_two
 
     def play(self):
-        GameDisplay.show(self.board)
+        self.game_display.show(self.board)
         self.start()
-        GameDisplay.show(self.board)
-        GameDisplay.game_over()
+        self.game_display.show(self.board)
+        self.game_display.game_over()
 
     def set_game_players(self, first_player: str):
         self._initiate_current_player_symbol(first_player)
@@ -51,18 +59,18 @@ class Game:
 
     def handle_play(self, player):
         if isinstance(player, HumanPlayer):
-            spot = GameDisplay.get_player_spot(self.board.get_available_spots())
+            spot = self.game_display.get_player_spot(self.board.get_available_spots())
             player.play(self.board, spot)
-            GameDisplay.chosen_spot(player.symbol, spot)
+            self.game_display.chosen_spot(player.symbol, spot)
         else:
             spot = player.play(self.board)
-            GameDisplay.chosen_spot(player.symbol, spot)
-        GameDisplay.show(self.board)
+            self.game_display.chosen_spot(player.symbol, spot)
+        self.game_display.show(self.board)
         self.handle_turns()
 
     def end_game(self):
         if self.board.is_win():
             winnerSymbol = self.game_state.get_winner(self.board)
-            GameDisplay.winner(winnerSymbol)
+            self.game_display.winner(winnerSymbol)
         elif self.game_state.finished(self.board):
-            GameDisplay.tie()
+            self.game_display.tie()

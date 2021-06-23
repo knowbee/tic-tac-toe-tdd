@@ -1,6 +1,8 @@
 import random
 from ..player import Player
-from core import GameDisplay, Board
+from core.board import Board
+
+# from core import GameDisplay, Board
 from .minimax import MiniMax
 from typing import List, Optional, Tuple
 import copy
