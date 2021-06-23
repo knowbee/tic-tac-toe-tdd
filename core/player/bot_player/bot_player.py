@@ -7,6 +7,7 @@ from .minimax import MiniMax
 from typing import List, Optional, Tuple
 import copy
 import math
+from typing import List
 
 
 class BotPlayer(Player):
@@ -21,5 +22,5 @@ class BotPlayer(Player):
         return move
 
     def get_random_available_spot(self, board: Board) -> int:
-        available_spot = board.get_available_spots()
+        available_spot: List[int] = board.get_available_spots()
         return random.choice(available_spot)

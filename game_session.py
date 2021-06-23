@@ -10,7 +10,7 @@ class GameSession:
         self.game_display: GameDisplay = game_display
 
     @classmethod
-    def get_game(cls, game_type: int):
+    def get_game(cls, game_type: int) -> Game:
         if game_type == 0:
             return Game(
                 player_one=HumanPlayer(),
@@ -28,9 +28,9 @@ class GameSession:
                 game_state=GameState(),
             )
 
-    def get_match(self):
+    def get_match(self) -> Game:
         game_type: int = self.game_display.get_game_type(self.game_display)
-        game = self.get_game(game_type)
+        game: int = self.get_game(game_type)
         first_player: str = self.game_display.get_first_player()
         game.set_game_players(first_player)
         return game
