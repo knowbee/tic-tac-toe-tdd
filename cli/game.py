@@ -2,14 +2,14 @@ from core.player import HumanPlayer
 from core.player.symbols import Symbols
 from cli.game_display import GameDisplay
 from core.game_state import GameState
-from core.player import Player
+from core.player.player import Player
 
 
 class Game:
     def __init__(
         self,
-        player_one,
-        player_two,
+        player_one: Player,
+        player_two: Player,
         game_display: GameDisplay = None,
         board=None,
         game_state: GameState = None,
