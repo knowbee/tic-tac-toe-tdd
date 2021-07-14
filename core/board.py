@@ -7,15 +7,15 @@ class Board:
         self.size = size
         self.grid = list(range(self.size * self.size))
 
-    def get_available_spots(self):
-        available_spots = [str(s) for s in self.grid if s != "X" and s != "O"]
+    def get_available_spots(self) -> List[int]:
+        available_spots: List[int] = [str(s) for s in self.grid if s != "X" and s != "O"]
         return available_spots
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         if self.size is not None:
             return len(self.get_available_spots()) == self.size ** 2
 
-    def reset(self):
+    def reset(self) -> None:
         self.grid = list(range(self.size ** 2))
 
     def set_spot(self, spot: int, symbol: str) -> None:
@@ -25,7 +25,7 @@ class Board:
         for combination in new_combinations:
             all_combinations.append(combination)
 
-    def get_both_diagonals(self):
+    def get_both_diagonals(self) -> List[list]:
         return [self.top_left_to_bottom_right_diagonal(), self.bottom_left_to_top_right_diagonal()]
 
     def get_all_combinations(self) -> List[list]:
@@ -48,7 +48,7 @@ class Board:
             if self.has_almost_unique_elements(combination):
                 return self.get_winning_spot(combination)
 
-    def get_winning_spot(self, combination: List):
+    def get_winning_spot(self, combination: List) -> int:
         winning_spot = [int(s) for s in combination if s != "X" and s != "O"][0]
         return winning_spot
 
@@ -66,9 +66,6 @@ class Board:
 
     def generate_board(self) -> List[list]:
         size = self.size
-        if size is None:
-            size = 3
-
         first_row: List[int] = list(range(size))
         all_rows: List[list] = [first_row]
         for i in range(size - 1):
