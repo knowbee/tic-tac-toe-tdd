@@ -8,14 +8,8 @@ python game_session.py
 
 ```
 
-## How to play web version ?
+## How run ngrok server ?
 
 ```js
-1. cd web
-
-2. yarn build
-
-3. cd  ..
-
-4. python server
+ngrok http <PORT>
 ```
