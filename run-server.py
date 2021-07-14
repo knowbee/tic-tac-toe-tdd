@@ -11,7 +11,9 @@ CORS(app)
 @app.after_request
 def middleware_for_response(response):
     response.headers.add("Access-Control-Allow-Credentials", "true")
-    response.headers.add("Access-Control-Allow-Origins", "http://localhost:3000")
+    response.headers.add("Access-Control-Allow-Origin", "https://c167ed55b573.ngrok.io")
+    response.headers.add("Access-Control-Allow-Headers", "withCredentials, content-type")
+
     return response
 
 
@@ -23,7 +25,8 @@ def home():
 @app.route("/play", methods=["POST"])
 def play():
     response = Response("Setting a cookie")
-    response.set_cookie("board", "a_cookie", httponly=True)
+    response = jsonify({"message": "this is the message"})
+    response.set_cookie("board", value="a_cookie", max_age=1000, httponly=True)
     return response
     # game: Game = Game(request.json["first_player"], request.json["board_size"], request.json["move"])
     # game.play()
