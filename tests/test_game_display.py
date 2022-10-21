@@ -77,7 +77,7 @@ class TestGameDisplay(unittest.TestCase):
         GameDisplay.prompt_first_player()
         self.assertEqual(
             GameDisplay.message,
-            "Who plays first, X or O?",
+            "Choose symbol, X or O?",
             "The game should give user a chance to pick who should go first",
         )
 

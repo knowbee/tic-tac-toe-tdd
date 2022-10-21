@@ -1,5 +1,6 @@
 import copy
-from core import Board, GameState
+from core.board import Board
+from core.game_state import GameState
 from typing import List, Optional, Tuple
 from ..symbols import Symbols
 from enum import Enum

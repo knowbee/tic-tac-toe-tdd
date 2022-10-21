@@ -1,10 +1,13 @@
 import random
 from ..player import Player
-from core import GameDisplay, Board
+from core.board import Board
+
+# from core import GameDisplay, Board
 from .minimax import MiniMax
 from typing import List, Optional, Tuple
 import copy
 import math
+from typing import List
 
 
 class BotPlayer(Player):
@@ -14,9 +17,10 @@ class BotPlayer(Player):
     def play(self, board: Board, **kwargs) -> int:
         minimax = MiniMax(self.symbol)
         score, move = minimax.get_best_spot(board)
-        board.set_spot(int(move), self.symbol)
+        if move is not None:
+            board.set_spot(int(move), self.symbol)
         return move
 
     def get_random_available_spot(self, board: Board) -> int:
-        available_spot = board.get_available_spots()
+        available_spot: List[int] = board.get_available_spots()
         return random.choice(available_spot)
